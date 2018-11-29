@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addBookManuelView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f6f6f6"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    tools:context=".activities.addBook.manuel.addByManuelActivity">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="3dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Book Name "
+                android:textSize="20sp" />
+            <EditText
+                android:id="@+id/bookNameET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Book Name" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Writer Name "
+                android:textSize="20sp" />
+            <EditText
+                android:id="@+id/writerNameET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Writer Name" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Publisher"
+                android:textSize="20sp" />
+            <EditText
+                android:id="@+id/publisherET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Publisher" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Publish Date"
+                android:textSize="20sp" />
+            <EditText
+                android:id="@+id/publishDateET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Publish Date"
+                />
+            //TODO: tarih secme ayari yapilacak
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="right">
+    <Button
+        android:id="@+id/addBookButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADD"/>
+    </LinearLayout>
+
+
+</LinearLayout>

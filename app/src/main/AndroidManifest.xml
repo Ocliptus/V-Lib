@@ -22,11 +22,15 @@
         <activity android:name=".MVPTestAct" />
         <activity android:name=".activities.sign.in.SignInAct" />
         <activity android:name=".activities.sign.up.SignUpAct" />
-        <activity android:name=".activities.main.MainAct"/>
+        <activity android:name=".activities.main.MainAct" />
+        <activity android:name=".activities.addBook.addBookAct" />
+        <activity android:name=".activities.addBook.manuel.addByManuelAct"/>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+
     </application>
 
 </manifest>

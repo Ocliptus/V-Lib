@@ -20,4 +20,9 @@
         android:text="Sign Out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/addBookViewButton"
+        android:text="add book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></Button>
 </LinearLayout>

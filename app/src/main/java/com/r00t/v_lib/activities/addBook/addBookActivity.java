@@ -1,4 +1,4 @@
-package com.r00t.v_lib.activities.main;
+package com.r00t.v_lib.activities.addBook;
 
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
@@ -8,18 +8,17 @@ import android.os.Bundle;
 
 import com.r00t.v_lib.R;
 
-public abstract class MainActivity extends AppCompatActivity {
+public abstract class addBookActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_book);
 
         ButterKnife.bind(this);
     }
-
-    @OnClick(R.id.signOutButton)
-    protected abstract void onSignOutClicked();
-    @OnClick(R.id.addBookViewButton)
-    protected abstract void addBookViewClicked();
+    @OnClick(R.id.manuelButton)
+    protected abstract void manuelButtonClicked();
 }
+
+

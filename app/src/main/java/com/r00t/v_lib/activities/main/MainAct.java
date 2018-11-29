@@ -2,6 +2,7 @@ package com.r00t.v_lib.activities.main;
 
 import android.content.Intent;
 
+import com.r00t.v_lib.activities.addBook.addBookAct;
 import com.r00t.v_lib.activities.start.StartAct;
 import com.r00t.v_lib.data.FirebaseImpl;
 
@@ -14,5 +15,9 @@ public class MainAct extends MainActivity {
 
         startActivity(new Intent(this, StartAct.class));
         finish();
+    }
+    @Override
+    protected void addBookViewClicked(){
+        startActivity(new Intent(this, addBookAct.class));
     }
 }
