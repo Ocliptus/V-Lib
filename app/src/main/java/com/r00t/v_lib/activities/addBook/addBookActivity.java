@@ -19,6 +19,8 @@ public abstract class addBookActivity extends AppCompatActivity {
     }
     @OnClick(R.id.manuelButton)
     protected abstract void manuelButtonClicked();
+    @OnClick (R.id.isbnButton)
+    protected abstract void isbnButtonClicked();
 }
 
 
