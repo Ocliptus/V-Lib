@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.r00t.v_lib.R;
 
-public abstract class addByManuelActivity extends addByManuelAct {
+public abstract class addByManuelActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

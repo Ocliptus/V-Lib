@@ -9,12 +9,7 @@ import com.r00t.v_lib.activities.addBook.addBookAct;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 
-public class addByManuelAct extends AppCompatActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_by_manuel);
+public class addByManuelAct extends addByManuelActivity {
 
-        ButterKnife.bind(this);
-    }
+
 }

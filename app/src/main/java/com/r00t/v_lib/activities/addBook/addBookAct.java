@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.r00t.v_lib.R;
+import com.r00t.v_lib.activities.addBook.manuel.addByManuelAct;
 import com.r00t.v_lib.activities.addBook.manuel.addByManuelActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,7 @@ public class addBookAct extends addBookActivity {
     }
     @Override
     protected void manuelButtonClicked(){
-        startActivity(new Intent(this, addByManuelActivity.class));
+        startActivity(new Intent(this, addByManuelAct.class));
     }
 
 }
