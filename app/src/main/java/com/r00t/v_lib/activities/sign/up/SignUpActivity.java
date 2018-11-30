@@ -30,4 +30,7 @@ public abstract class SignUpActivity extends AppCompatActivity {
 
     @OnClick(R.id.signUpButton)
     protected abstract void onSignUpClicked();
+    protected abstract boolean checkEmail();
+    protected abstract boolean checkPassword();
+
 }

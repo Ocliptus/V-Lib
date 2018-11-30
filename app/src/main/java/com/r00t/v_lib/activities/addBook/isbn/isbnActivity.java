@@ -18,6 +18,8 @@ public abstract class isbnActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
     }
+    @OnClick(R.id.isbnAdd)
+    public abstract void isbnAddClicked();
 
 
 }

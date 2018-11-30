@@ -33,4 +33,6 @@ public abstract class SignInActivity extends AppCompatActivity {
 
     @OnClick(R.id.signInButton)
     protected abstract void onSignInClicked();
+    protected abstract boolean checkEmail();
+    protected abstract boolean checkPassword();
 }

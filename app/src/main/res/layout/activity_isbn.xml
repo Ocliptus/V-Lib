@@ -28,6 +28,7 @@
             android:text="ISBN Number :   "
             android:textSize="20sp"/>
             <EditText
+                android:id="@+id/isbnET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="ISBN Number            "/>
@@ -42,7 +43,7 @@
         android:orientation="vertical"
         android:background="#f6f6f6">
         <Button
-
+            android:id="@+id/isbnAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
