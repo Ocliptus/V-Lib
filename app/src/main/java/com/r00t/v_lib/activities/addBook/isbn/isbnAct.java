@@ -10,7 +10,9 @@ import butterknife.ButterKnife;
 public class isbnAct extends isbnActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_isbn);
+        ButterKnife.bind(this);
     }
 
 }
