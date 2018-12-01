@@ -41,7 +41,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
     //CardView
     implementation 'androidx.cardview:cardview:1.0.0'
-    compile 'com.google.apis:google-api-services-books:v1-rev104-1.25.0'
+    api 'com.google.apis:google-api-services-books:v1-rev104-1.25.0'
     // Google Cloud Vision API
     implementation 'com.google.android.gms:play-services-base:11.8.0'
     implementation 'com.google.android.gms:play-services-auth:11.8.0'
