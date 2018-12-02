@@ -22,18 +22,14 @@ import java.net.URL;
 public class FetchBook extends AsyncTask<String,Void,String>{
 
     // Variables for the search input field, and results TextViews
-    private EditText mBookInput;
-    private TextView mTitleText;
-    private TextView mAuthorText;
+
 
     // Class name for Log tag
     private static final String LOG_TAG = FetchBook.class.getSimpleName();
 
     // Constructor providing a reference to the views in MainActivity
-    public FetchBook(TextView titleText, TextView authorText, EditText bookInput) {
-        this.mTitleText = titleText;
-        this.mAuthorText = authorText;
-        this.mBookInput = bookInput;
+    public FetchBook() {
+
     }
 
 
@@ -167,20 +163,16 @@ public class FetchBook extends AsyncTask<String,Void,String>{
 
             // If both are found, display the result.
             if (title != null && authors != null){
-                mTitleText.setText(title);
-                mAuthorText.setText(authors);
-                mBookInput.setText("");
+                //TODO
             } else {
                 // If none are found, update the UI to show failed results.
-                mTitleText.setText(R.string.no_results);
-                mAuthorText.setText("");
+               //TODO:
             }
 
         } catch (Exception e){
             // If onPostExecute does not receive a proper JSON string,
             // update the UI to show failed results.
-            mTitleText.setText(R.string.no_results);
-            mAuthorText.setText("");
+           //TODO:
             e.printStackTrace();
         }
     }

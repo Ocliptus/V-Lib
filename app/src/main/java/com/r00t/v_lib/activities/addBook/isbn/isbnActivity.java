@@ -2,6 +2,7 @@ package com.r00t.v_lib.activities.addBook.isbn;
 
 
 import android.os.Bundle;
+import android.widget.EditText;
 
 import com.r00t.v_lib.R;
 
