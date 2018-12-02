@@ -10,12 +10,15 @@ import com.r00t.v_lib.activities.sign.up.SignUpAct;
 import com.r00t.v_lib.data.FirebaseImpl;
 
 import androidx.annotation.NonNull;
+import androidx.loader.content.AsyncTaskLoader;
 
 public class StartAct extends StartActivity {
 
     @Override
     protected void checkUser() {
-        if (FirebaseImpl.getInstance(this).getFirebaseUser() == null) {
+        //TODO: check internet connection if there is no then display a message
+
+          if (FirebaseImpl.getInstance(this).getFirebaseUser() == null) {
             direct(SignInAct.class);
         } else {
             FirebaseImpl.getInstance(this)

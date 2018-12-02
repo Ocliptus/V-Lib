@@ -2,6 +2,7 @@ package com.r00t.v_lib.activities.addBook.manuel;
 
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import android.os.Bundle;
 
@@ -15,5 +16,8 @@ public abstract class addByManuelActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
     }
+    @OnClick(R.id.addBookButton)
+    protected abstract void addBookButtonClicked();
+
 
 }

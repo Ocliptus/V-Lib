@@ -11,5 +11,8 @@ import butterknife.ButterKnife;
 
 public class addByManuelAct extends addByManuelActivity {
 
-
+    @Override
+    protected void addBookButtonClicked() {
+        
+    }
 }
