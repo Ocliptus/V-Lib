@@ -3,7 +3,7 @@ package com.r00t.v_lib.data;
 import java.io.Serializable;
 
 public class Book implements Serializable {
-    private String title,author,date,ISBN;
+    private String title,author,date,ISBN,bib_key,preview,thumbnail_url,preview_url,info_url,;
 
     public Book(String title, String author, String date, String ISBN) {
         this.title = title;
