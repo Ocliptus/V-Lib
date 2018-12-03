@@ -1,6 +1,7 @@
 package com.r00t.v_lib.activities.addBook.isbn;
 
 import android.content.Intent;
+import android.content.SearchRecentSuggestionsProvider;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -9,7 +10,7 @@ import com.r00t.v_lib.R;
 import com.r00t.v_lib.activities.addBook.manuel.addByManuelAct;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
-
+import com.r00t.v_lib.data.searchTest;
 public class isbnAct extends isbnActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,9 @@ public class isbnAct extends isbnActivity {
                 )
         {
             //TODO: Search in books api
-
+            String isbn = ((EditText)findViewById(R.id.isbnET)).getText().toString();
+            searchTest st = new searchTest();
+            st.getBooks(isbn);
         }
         else{
             Toast.makeText(this,"Entry does not fit the standart rules",Toast.LENGTH_LONG).show();

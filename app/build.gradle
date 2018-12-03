@@ -49,12 +49,15 @@ dependencies {
     //CardView
     implementation 'androidx.cardview:cardview:1.0.0'
     api 'com.google.apis:google-api-services-books:v1-rev104-1.25.0'
+    //Android Asynchronous Http Client
+    implementation 'com.loopj.android:android-async-http:1.4.9'
     // Google Cloud Vision API
     implementation 'com.google.android.gms:play-services-base:11.8.0'
     implementation 'com.google.android.gms:play-services-auth:11.8.0'
     implementation 'com.google.apis:google-api-services-vision:v1-rev16-1.22.0'
     implementation ('com.google.api-client:google-api-client-android:1.22.0') {
         exclude module: 'httpclient'
+
     }
     implementation ('com.google.http-client:google-http-client-gson:1.20.0') {
         exclude module: 'httpclient'
