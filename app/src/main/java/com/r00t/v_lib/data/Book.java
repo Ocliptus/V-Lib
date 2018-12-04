@@ -3,44 +3,56 @@ package com.r00t.v_lib.data;
 import java.io.Serializable;
 
 public class Book implements Serializable {
-    private String title,author,date,ISBN,bib_key,preview,thumbnail_url,preview_url,info_url,;
+    private String bib_key,preview,thumbnail_url,preview_url,info_url;
 
-    public Book(String title, String author, String date, String ISBN) {
-        this.title = title;
-        this.author = author;
-        this.date = date;
-        this.ISBN = ISBN;
+    public Book(String bib_key, String preview, String thumbnail_url, String preview_url,String info_url) {
+        this.bib_key = bib_key;
+        this.preview = preview;
+        this.thumbnail_url = thumbnail_url;
+        this.preview_url = preview_url;
+        this.info_url = info_url;
     }
 
-    public String getTitle() {
-        return title;
+    public String getBib_key() {
+        return bib_key;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setBib_key(String bib_key) {
+        this.bib_key = bib_key;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getPreview() {
+        return preview;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setPreview(String preview) {
+        this.preview = preview;
     }
 
-    public String getDate() {
-        return date;
+    public String getThumbnail_url() {
+        return thumbnail_url;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setThumbnail_url(String thumbnail_url) {
+        this.thumbnail_url = thumbnail_url;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getPreview_url() {
+        return preview_url;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setPreview_url(String preview_url) {
+        this.preview_url = preview_url;
+    }
+
+    public String getInfo_url() {
+        return info_url;
+    }
+
+    public void setInfo_url(String info_url) {
+        this.info_url = info_url;
+    }
+    public String toString(){
+        return bib_key + preview + thumbnail_url + preview_url + info_url;
     }
 }
