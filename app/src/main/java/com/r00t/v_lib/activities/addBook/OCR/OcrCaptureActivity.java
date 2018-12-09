@@ -25,6 +25,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import com.google.android.gms.vision.text.Element;
+import com.google.android.gms.vision.text.Line;
+import com.google.android.gms.vision.text.Text;
 import com.r00t.v_lib.activities.addBook.OCR.ui.camera.*;
 
 import com.google.android.gms.vision.text.TextBlock;
@@ -36,6 +38,7 @@ import com.r00t.v_lib.activities.addBook.OCR.ui.camera.CameraSourcePreview;
 import com.r00t.v_lib.activities.addBook.OCR.ui.camera.CameraSource;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
@@ -344,11 +347,38 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         if (graphic != null) {
             text = graphic.getWord();
 
+            List l = text.getComponents();
             if (text != null && text.getValue() != null) {
                 String s = text.getValue();
                 Snackbar.make(graphicOverlay, s,
                         Snackbar.LENGTH_LONG)
                         .show();
+                for (Object t:l
+                     ) {
+                    Snackbar.make(graphicOverlay, ((Line)t).getValue(),
+                            Snackbar.LENGTH_LONG)
+                            .show();
+                    /*TODO
+                        baba
+                        linları arası bekleme
+                        lineları elementlere bölme
+                        içinden isimleri seçtirme
+                        nası?
+                        ha bir de translate apisini mi kullansak ?
+                        ama ilk şu işi halledelim gerisi kolay
+
+                     */
+                    try {
+                        Thread.sleep(((long)4000));
+                    }catch (InterruptedException e){
+                        Snackbar.make(graphicOverlay, e.toString(),
+                                Snackbar.LENGTH_LONG)
+                                .show();
+                    }
+
+
+
+                }
 
 
 

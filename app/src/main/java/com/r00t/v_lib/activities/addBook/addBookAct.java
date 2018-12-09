@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.r00t.v_lib.R;
 import com.r00t.v_lib.activities.addBook.OCR.OcrCaptureActivity;
+import com.r00t.v_lib.activities.addBook.OCR.TuritonPackage.Turiton;
 import com.r00t.v_lib.activities.addBook.isbn.isbnAct;
 import com.r00t.v_lib.activities.addBook.manuel.addByManuelAct;
 
@@ -28,4 +29,7 @@ public class addBookAct extends addBookActivity {
     protected void ocrButtonClicked() {
         startActivity(new Intent(this, OcrCaptureActivity.class));
     }
+
+    @Override
+    protected void turitonButtonClicked() {startActivity(new Intent(this, Turiton.class));    }
 }

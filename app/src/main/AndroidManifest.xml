@@ -36,7 +36,8 @@
 
         <activity android:name=".activities.addBook.isbn.isbnAct" />
         <activity android:name=".activities.addBook.image.AddByImageActivity" />
-        <activity android:name=".activities.addBook.OCR.OcrCaptureActivity"></activity>
+        <activity android:name=".activities.addBook.OCR.OcrCaptureActivity" />
+        <activity android:name=".activities.addBook.OCR.TuritonPackage.Turiton"></activity>
     </application>
 
 </manifest>
