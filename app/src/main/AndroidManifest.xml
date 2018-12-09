@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.r00t.v_lib">
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -33,7 +34,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".activities.addBook.isbn.isbnAct"></activity>
+        <activity android:name=".activities.addBook.isbn.isbnAct" />
+        <activity android:name=".activities.addBook.image.AddByImageActivity" />
+        <activity android:name=".activities.addBook.OCR.OcrCaptureActivity"></activity>
     </application>
 
 </manifest>
