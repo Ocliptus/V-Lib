@@ -52,7 +52,13 @@
             android:textColor="#f6f6f6"
             android:textSize="15.5sp"
             />
+
     </LinearLayout>
 
-
+    <TextView
+        android:id="@+id/testTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="test"
+        android:textSize="20sp"/>
 </LinearLayout>
