@@ -3,8 +3,6 @@ package com.r00t.v_lib.activities.addBook;
 import android.content.Intent;
 import android.os.Bundle;
 import com.r00t.v_lib.R;
-import com.r00t.v_lib.activities.addBook.OCR.OcrCaptureActivity;
-import com.r00t.v_lib.activities.addBook.OCR.TuritonPackage.Turiton;
 import com.r00t.v_lib.activities.addBook.isbn.isbnAct;
 import com.r00t.v_lib.activities.addBook.manuel.addByManuelAct;
 
@@ -18,18 +16,15 @@ public class addBookAct extends addBookActivity {
 
         ButterKnife.bind(this);
     }
+
     @Override
-    protected void manuelButtonClicked(){
+    protected void manuelButtonClicked() {
         startActivity(new Intent(this, addByManuelAct.class));
     }
-    @Override
-    protected void isbnButtonClicked(){startActivity(new Intent(this, isbnAct.class));}
 
     @Override
-    protected void ocrButtonClicked() {
-        startActivity(new Intent(this, OcrCaptureActivity.class));
+    protected void isbnButtonClicked() {
+        startActivity(new Intent(this, isbnAct.class));
     }
-
-    @Override
-    protected void turitonButtonClicked() {startActivity(new Intent(this, Turiton.class));    }
 }
+

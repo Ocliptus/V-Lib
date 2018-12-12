@@ -28,6 +28,7 @@
         <activity android:name=".activities.main.MainAct" />
         <activity android:name=".activities.addBook.addBookAct" />
         <activity android:name=".activities.addBook.manuel.addByManuelAct" />
+        <activity android:name=".activities.myLibrary.myLibraryAct"/>
 
         <meta-data
             android:name="preloaded_fonts"
