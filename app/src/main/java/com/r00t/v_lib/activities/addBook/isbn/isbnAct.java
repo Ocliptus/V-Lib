@@ -7,8 +7,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.r00t.v_lib.R;
 import com.r00t.v_lib.data.Book;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -52,26 +55,40 @@ public class isbnAct extends isbnActivity {
                 inputLine = br.readLine();
 
                 JSONObject obj = new JSONObject(inputLine);
-                //String objName = "ISBN:"+ isbn;
-                //String bib_key = obj.getJSONObject(objName).getString("bib_key");
-                //String  publishers = obj.getJSONObject(objName).getString("publishers");
-                //String  weight = obj.getJSONObject(objName).getString("weight");
-                //String  title = obj.getJSONObject(objName).getString("title");
-                //String  urlBook = obj.getJSONObject(objName).getString("url");
-                //String  number_of_pages = obj.getJSONObject(objName).getString("number_of_pages");
-                //String  cover_little = obj.getJSONObject(objName).getString("cover");
-                //String  cover_middle = obj.getJSONObject(objName).getString("cover");
-                //String  cover_big = obj.getJSONObject(objName).getString("cover");
-                //String  publishDate = obj.getJSONObject(objName).getString("publish_date");
-                //String  authors = obj.getJSONObject(objName).getString("authors");
-                //String  publishPlaces = obj.getJSONObject(objName).getString("publish_places");
+                String objName = "ISBN:"+ isbn;
+                String isbnNumber = isbn;
+                String  weight = obj.getJSONObject(objName).getString("weight");
+                String  urlBook = obj.getJSONObject(objName).getString("url");
+                String  number_of_pages = obj.getJSONObject(objName).getString("number_of_pages");
+                String  publishDate = obj.getJSONObject(objName).getString("publish_date");
+                String  title = obj.getJSONObject(objName).getString("title");
+                JSONObject cover = obj.getJSONObject(objName).getJSONObject("cover");
+                String  cover_small = cover.getString("small");
+                String  cover_medium = cover.getString("medium");
+                String  cover_large = cover.getString("large");
+                JSONArray authors = obj.getJSONObject(objName).getJSONArray("authors");
+                String author="";
+                JSONArray publishPlaces = obj.getJSONObject(objName).getJSONArray("publish_places");
+                String publish_places="";
+                int i;
+                for (i=0; i<authors.length(); i++){
+                    String tempInput = authors.get(i).toString();
+                    JSONObject tempObj = new JSONObject(tempInput);
+                    author = author +" " + tempObj.getString("name");
+                    String tempInput2 = publishPlaces.get(i).toString();
+                    JSONObject tempObj2 = new JSONObject(tempInput2);
+                    publish_places =publish_places+" "+ tempObj2.getString("name");
+                }
 
 
 
-                //Book book = new Gson().fromJson(obj,Book.class);
+
+
+
 
                 TextView testTV = (TextView) findViewById(R.id.testTV);
-                //testTV.setText(book.toString());
+                testTV.setText(title+" "+objName+" "+isbnNumber+" "+weight+" "+urlBook+" "+number_of_pages+" "+publishDate+" "+cover_small+" "+
+                        cover_medium+" "+cover_large+" "+author+" "+publish_places );
                 //TODO: pop up yap objeyi firebase e yolla kaydet
 
 

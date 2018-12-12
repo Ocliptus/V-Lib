@@ -4,23 +4,22 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Book implements Serializable {
-    private List<Book> publishers;
-    private List<Book> identifiers;
-    private List<Book> classifications;
-    private List<Book> links;
+
     private String weight;
     private String url;
     private String number_of_pages;
-    private String cover;
-    private String cover_middle;
-    private String cover_big;
-    private List<Book> subjects;
+    private String cover_small;
+    private String cover_medium;
+    private String cover_large;
     private String publishDate;
     private List<Book> authors;
     private List<Book> excerpts;
+    private List<Book> publishers;
+    private List<Book> subjects;
     private List<Book> publishPlaces;
-    public String toString(){
-        return " " + publishers + identifiers+classifications+links+weight+url+number_of_pages+cover+subjects+publishDate+authors+excerpts+publishPlaces;
+
+    public String toString() {
+        return " " + publishers + weight + url + number_of_pages + cover_small + subjects + publishDate + authors + excerpts + publishPlaces;
     }
 
     public List<Book> getPublishers() {
@@ -31,29 +30,6 @@ public class Book implements Serializable {
         this.publishers = publishers;
     }
 
-    public List<Book> getIdentifiers() {
-        return identifiers;
-    }
-
-    public void setIdentifiers(List<Book> identifiers) {
-        this.identifiers = identifiers;
-    }
-
-    public List<Book> getClassifications() {
-        return classifications;
-    }
-
-    public void setClassifications(List<Book> classifications) {
-        this.classifications = classifications;
-    }
-
-    public List<Book> getLinks() {
-        return links;
-    }
-
-    public void setLinks(List<Book> links) {
-        this.links = links;
-    }
 
     public String getWeight() {
         return weight;
@@ -80,27 +56,27 @@ public class Book implements Serializable {
     }
 
     public String getCover() {
-        return cover;
+        return cover_small;
     }
 
     public void setCover(String cover) {
-        this.cover = cover;
+        this.cover_small = cover;
     }
 
     public String getCover_middle() {
-        return cover_middle;
+        return cover_medium;
     }
 
     public void setCover_middle(String cover_middle) {
-        this.cover_middle = cover_middle;
+        this.cover_medium = cover_middle;
     }
 
     public String getCover_big() {
-        return cover_big;
+        return cover_large;
     }
 
     public void setCover_big(String cover_big) {
-        this.cover_big = cover_big;
+        this.cover_large = cover_big;
     }
 
     public List<Book> getSubjects() {
@@ -144,24 +120,18 @@ public class Book implements Serializable {
     }
 
 
-
-
-    public Book(List<Book> publishers, List<Book> identifiers,List<Book> classifications,List<Book> links,
-                String weight,String url,String number_of_pages,String cover,List<Book> subjects,String publishDate,
-                List<Book> authors,List<Book> excerpts,List<Book> publishPlaces){
-
+    public Book(List<Book> publishers,
+                String weight, String url, String number_of_pages, String cover_small, List<Book> subjects, String publishDate,
+                List<Book> authors, List<Book> excerpts, List<Book> publishPlaces) {
+        this.cover_small = cover_small;
         this.publishers = publishers;
         this.weight = weight;
-        this.url=url;
-        this.number_of_pages=number_of_pages;
-        this.cover = cover;
-        this.identifiers=identifiers;
-        this.classifications=classifications;
-        this.links=links;
-        this.subjects=subjects;
-        this.excerpts=excerpts;
-        this.publishDate=publishDate;
-        this.authors=authors;
-        this.publishPlaces=publishPlaces;
+        this.url = url;
+        this.number_of_pages = number_of_pages;
+        this.subjects = subjects;
+        this.excerpts = excerpts;
+        this.publishDate = publishDate;
+        this.authors = authors;
+        this.publishPlaces = publishPlaces;
     }
 }
