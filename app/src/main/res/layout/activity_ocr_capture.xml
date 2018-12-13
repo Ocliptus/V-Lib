@@ -21,11 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/btnOkay"
-            android:layout_width="15dp"
-            android:layout_height="20dp" />
-
     </com.r00t.v_lib.activities.addBook.OCR.ui.camera.CameraSourcePreview>
 
     <androidx.appcompat.widget.Toolbar
@@ -34,7 +29,22 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="?attr/actionBarTheme"
+        android:gravity="bottom">
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom">
+
+            <TextView
+                android:id="@+id/btnOkay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="TEST" />
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
 
 </LinearLayout>
