@@ -37,6 +37,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add by Manuelly"></Button>
+            <Button
+                android:id="@+id/ocrButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add via camera"></Button>
 
         </LinearLayout>
 

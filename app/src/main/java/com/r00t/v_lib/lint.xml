@@ -1,8 +1,6 @@
 <lint>
     <issue id="InvalidPackage">
-        <ignore path="C:\Users\GunesBizim\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-core\1.12.0\541a5c68ce85c03190e29bc9e0ec611d2b75ff24\grpc-core-1.12.0.jar"/>
-        <ignore path="C:\Users\GunesBizim\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-core\1.12.0\541a5c68ce85c03190e29bc9e0ec611d2b75ff24\grpc-core-1.12.0.jar"/>
-        <ignore path="C:\Users\GunesBizim\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpclient\4.5.5\1603dfd56ebcd583ccdf337b6c3984ac55d89e58\httpclient-4.5.5.jar"/>
-
+        <ignore path="C:\Users\Hazarcan Doğa Bakan\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-core\1.12.0\541a5c68ce85c03190e29bc9e0ec611d2b75ff24\grpc-core-1.12.0.jar"/>
+        <ignore path="C:\Users\Hazarcan Doğa Bakan\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpclient\4.5.5\1603dfd56ebcd583ccdf337b6c3984ac55d89e58\httpclient-4.5.5.jar"/>
     </issue>
 </lint>
