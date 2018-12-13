@@ -1,4 +1,4 @@
-setContentView(R.layout.activity_ocr_capture2);package com.r00t.v_lib.activities.addBook.OCR;
+package com.r00t.v_lib.activities.addBook.OCR;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ public class OcrCaptureAct extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ocr_capture2);
 
     }
 }
