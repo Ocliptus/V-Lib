@@ -30,7 +30,6 @@ public class isbnSearch {
         URL website = null;
         try {
             website = new URL(url);
-
         URLConnection connection = website.openConnection();
         BufferedReader in = new BufferedReader( new InputStreamReader(connection.getInputStream(),"UTF8"));
             StringBuilder response = new StringBuilder();
