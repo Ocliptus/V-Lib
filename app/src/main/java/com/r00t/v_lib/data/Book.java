@@ -4,32 +4,25 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Book implements Serializable {
-
+    private String isbn;
     private String weight;
-    private String url;
+    private String urlBook;
     private String number_of_pages;
+    private String publishDate;
+    private String title;
     private String cover_small;
     private String cover_medium;
     private String cover_large;
-    private String publishDate;
-    private List<Book> authors;
-    private List<Book> excerpts;
-    private List<Book> publishers;
-    private List<Book> subjects;
-    private List<Book> publishPlaces;
+    private String authors;
+    private String publish_places;
 
-    public String toString() {
-        return " " + publishers + weight + url + number_of_pages + cover_small + subjects + publishDate + authors + excerpts + publishPlaces;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public List<Book> getPublishers() {
-        return publishers;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
-
-    public void setPublishers(List<Book> publishers) {
-        this.publishers = publishers;
-    }
-
 
     public String getWeight() {
         return weight;
@@ -39,12 +32,12 @@ public class Book implements Serializable {
         this.weight = weight;
     }
 
-    public String getUrl() {
-        return url;
+    public String getUrlBook() {
+        return urlBook;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUrlBook(String urlBook) {
+        this.urlBook = urlBook;
     }
 
     public String getNumber_of_pages() {
@@ -55,38 +48,6 @@ public class Book implements Serializable {
         this.number_of_pages = number_of_pages;
     }
 
-    public String getCover() {
-        return cover_small;
-    }
-
-    public void setCover(String cover) {
-        this.cover_small = cover;
-    }
-
-    public String getCover_middle() {
-        return cover_medium;
-    }
-
-    public void setCover_middle(String cover_middle) {
-        this.cover_medium = cover_middle;
-    }
-
-    public String getCover_big() {
-        return cover_large;
-    }
-
-    public void setCover_big(String cover_big) {
-        this.cover_large = cover_big;
-    }
-
-    public List<Book> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(List<Book> subjects) {
-        this.subjects = subjects;
-    }
-
     public String getPublishDate() {
         return publishDate;
     }
@@ -95,43 +56,73 @@ public class Book implements Serializable {
         this.publishDate = publishDate;
     }
 
-    public List<Book> getAuthors() {
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCover_small() {
+        return cover_small;
+    }
+
+    public void setCover_small(String cover_small) {
+        this.cover_small = cover_small;
+    }
+
+    public String getCover_medium() {
+        return cover_medium;
+    }
+
+    public void setCover_medium(String cover_medium) {
+        this.cover_medium = cover_medium;
+    }
+
+    public String getCover_large() {
+        return cover_large;
+    }
+
+    public void setCover_large(String cover_large) {
+        this.cover_large = cover_large;
+    }
+
+    public String getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<Book> authors) {
+    public void setAuthors(String authors) {
         this.authors = authors;
     }
 
-    public List<Book> getExcerpts() {
-        return excerpts;
+    public String getPublish_places() {
+        return publish_places;
     }
 
-    public void setExcerpts(List<Book> excerpts) {
-        this.excerpts = excerpts;
+    public void setPublish_places(String publish_places) {
+        this.publish_places = publish_places;
+    }
+    public String toString(){
+        return "ISBN:" + isbn + " Weight:" +weight+" Book URL:" +urlBook + " Number Of Pages:" + number_of_pages+
+                " Publish Date:" + publishDate+" Title : " + title +" Small Cover:" +cover_small+" Medium Cover:" + cover_medium +
+                " Large Cover :"+cover_large+" Authors:" + authors+" Publish Places:"+ publish_places;
     }
 
-    public List<Book> getPublishPlaces() {
-        return publishPlaces;
-    }
-
-    public void setPublishPlaces(List<Book> publishPlaces) {
-        this.publishPlaces = publishPlaces;
-    }
-
-
-    public Book(List<Book> publishers,
-                String weight, String url, String number_of_pages, String cover_small, List<Book> subjects, String publishDate,
-                List<Book> authors, List<Book> excerpts, List<Book> publishPlaces) {
+    public Book(String isbn, String weight, String urlBook, String number_of_pages
+            , String publishDate, String title, String cover_small, String cover_medium
+                , String cover_large, String authors, String publish_places) {
         this.cover_small = cover_small;
-        this.publishers = publishers;
+        this.cover_medium = cover_medium;
+        this.cover_large = cover_large;
+        this.authors = authors;
         this.weight = weight;
-        this.url = url;
+        this.urlBook = urlBook;
         this.number_of_pages = number_of_pages;
-        this.subjects = subjects;
-        this.excerpts = excerpts;
         this.publishDate = publishDate;
         this.authors = authors;
-        this.publishPlaces = publishPlaces;
+        this.publish_places = publish_places;
+        this.isbn = isbn;
+        this.title=title;
     }
 }

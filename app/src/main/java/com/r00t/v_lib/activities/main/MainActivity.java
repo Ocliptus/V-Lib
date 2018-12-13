@@ -1,5 +1,11 @@
 package com.r00t.v_lib.activities.main;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import com.google.android.material.navigation.NavigationView;
+import com.r00t.v_lib.R;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,10 +13,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import android.os.Bundle;
-import android.view.MenuItem;
-import com.google.android.material.navigation.NavigationView;
-import com.r00t.v_lib.R;
 
 
 public abstract class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,7 +33,9 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
+
     }
+
 
     @Override
     public void onBackPressed() {
