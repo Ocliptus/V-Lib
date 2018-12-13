@@ -1,4 +1,4 @@
-setContentView(R.layout.activity_ocr_capture2);package com.r00t.v_lib.activities.addBook.OCR;
+package com.r00t.v_lib.activities.addBook.OCR;
 
 import androidx.appcompat.app.AppCompatActivity;
 
