@@ -1,32 +1,26 @@
-package com.r00t.v_lib.activities.main;
+package com.r00t.v_lib.activities.profilePage;
+
 
 import android.content.Intent;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
 import com.r00t.v_lib.R;
 import com.r00t.v_lib.activities.addBook.addBookAct;
 import com.r00t.v_lib.activities.myLibrary.myLibraryAct;
-import com.r00t.v_lib.activities.profilePage.profilePageAct;
 import com.r00t.v_lib.activities.start.StartAct;
 import com.r00t.v_lib.data.FirebaseImpl;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 
-public class MainAct extends MainActivity {
-
-
+public class profilePageAct extends profilePageActivity {
     @Override
     protected void addBookViewClicked() {
 
         startActivity(new Intent(this, addBookAct.class));
 
     }
-
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -56,10 +50,4 @@ public class MainAct extends MainActivity {
         return true;
 
     }
-
-    @Override
-    protected void profilePageClicked() {
-        startActivity(new Intent(this, profilePageAct.class));
-    }
-
 }
