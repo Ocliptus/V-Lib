@@ -62,4 +62,6 @@ public class MainAct extends MainActivity {
         startActivity(new Intent(this, profilePageAct.class));
     }
 
+
+
 }

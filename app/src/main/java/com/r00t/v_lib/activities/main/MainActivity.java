@@ -52,4 +52,5 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
     protected abstract void addBookViewClicked();
     @OnClick(R.id.nav_profile)
     protected abstract void profilePageClicked();
+
 }

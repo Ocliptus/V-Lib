@@ -4,10 +4,8 @@ import android.app.Dialog;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.r00t.v_lib.R;
 import com.r00t.v_lib.data.Book;
 import com.r00t.v_lib.data.FirebaseImpl;
@@ -22,7 +26,6 @@ import com.r00t.v_lib.data.FirebaseImpl;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,8 +36,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import androidx.annotation.NonNull;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class isbnAct extends isbnActivity {
@@ -53,15 +56,86 @@ public class isbnAct extends isbnActivity {
     @Override
     public void isbnAddClicked() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
         StrictMode.setThreadPolicy(policy);
+
         if (((EditText) findViewById(R.id.isbnET)).getText().toString().matches("[\\d]{10}|[\\d]{13}")) {
-            URL url;
-            // get URL content
-            String isbn = ((EditText) findViewById(R.id.isbnET)).getText().toString();
 
 
+            final String isbn = ((EditText) findViewById(R.id.isbnET)).getText().toString();
             try {
+
+                FirebaseImpl.getInstance(this).getFirestore().collection("bookDetails").document(isbn).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(@NonNull DocumentSnapshot doc) {
+                        Toast.makeText(getApplicationContext(), "This book details comes from firebase", Toast.LENGTH_LONG).show();
+
+                        Book book = new Book("", "", "", "", "", "", "", "", "", "", "");
+                        book.setIsbn(doc.get("isbn").toString());
+                        String isbnCheck = book.getIsbn();
+                        book.setWeight(doc.get("weight").toString());
+                        book.setUrlBook(doc.get("urlBook").toString());
+                        book.setNumber_of_pages(doc.get("number_of_pages").toString());
+                        book.setPublishDate(doc.get("publishDate").toString());
+                        book.setTitle(doc.get("title").toString());
+                        book.setCover_small(doc.get("cover_small").toString());
+                        book.setCover_medium(doc.get("cover_medium").toString());
+                        book.setCover_large(doc.get("cover_large").toString());
+                        book.setAuthors(doc.get("authors").toString());
+                        book.setPublish_places(doc.get("publish_places").toString());
+
+                        TextView imgClose;
+                        ImageView cover_medium_view;
+                        Button btnAdd;
+                        Button btnPass;
+                        TextView titleTV;
+                        TextView isbnTV;
+                        TextView bookUrlTV;
+                        TextView numberOfPagesTV;
+                        TextView publishDateTV;
+                        TextView authorsTV;
+                        TextView publishPlacesTV;
+
+                        myDialog.setContentView(R.layout.add_book_popup);
+                        cover_medium_view = (ImageView) myDialog.findViewById(R.id.cover_medium_view);
+                        titleTV = (TextView) myDialog.findViewById(R.id.titleTV);
+                        isbnTV = (TextView) myDialog.findViewById(R.id.isbnTV);
+                        bookUrlTV = (TextView) myDialog.findViewById(R.id.bookUrlTV);
+                        numberOfPagesTV = (TextView) myDialog.findViewById(R.id.numberOfPagesTV);
+                        publishDateTV = (TextView) myDialog.findViewById(R.id.publishDateTV);
+                        authorsTV = (TextView) myDialog.findViewById(R.id.authorsTV);
+                        publishPlacesTV = (TextView) myDialog.findViewById(R.id.publishPlacesTV);
+                        imgClose = (TextView) myDialog.findViewById(R.id.popup_close);
+                        btnAdd = (Button) myDialog.findViewById(R.id.add_library);
+                        btnPass = (Button) myDialog.findViewById(R.id.wrong_book);
+
+                        titleTV.setText(book.getTitle());
+                        isbnTV.setText(isbn);
+                        bookUrlTV.setText(book.getUrlBook());
+                        numberOfPagesTV.setText(book.getNumber_of_pages());
+                        authorsTV.setText(book.getAuthors());
+                        publishPlacesTV.setText(book.getPublish_places());
+                        publishDateTV.setText(book.getPublishDate());
+
+
+                        cover_medium_view.setImageBitmap(getBitmapFromURL(book.getCover_medium()));
+                        myDialog.dismiss();
+                        myDialog.show();
+                        isAddLibraryClicked(isbn, book, btnAdd);
+                        isClosePopUpClicked(imgClose);
+                        isWrongBookClicked(btnPass);
+
+
+
+
+                    }
+
+                });
+
+        }catch(NullPointerException e){
+            try {
+                //get URL content
+                Toast.makeText(getApplicationContext(), "This book details comes from openlibrary", Toast.LENGTH_LONG).show();
+                URL url;
                 url = new URL(isbnSearch.urlCombine(isbn));
 
                 URLConnection con = url.openConnection();
@@ -99,7 +173,7 @@ public class isbnAct extends isbnActivity {
                     }
 
 
-                    Book book = new Book(isbn, weight, urlBook, number_of_pages, publishDate,
+                    Book book2 = new Book(isbn, weight, urlBook, number_of_pages, publishDate,
                             title, cover_small, cover_medium, cover_large, author, publish_places);
 
                     TextView imgClose;
@@ -139,12 +213,12 @@ public class isbnAct extends isbnActivity {
                     cover_medium_view.setImageBitmap(getBitmapFromURL(cover_medium));
                     myDialog.dismiss();
                     myDialog.show();
-                    isAddLibraryClicked(isbn, book, btnAdd);
+                    isAddLibraryClicked(isbn, book2, btnAdd);
                     isClosePopUpClicked(imgClose);
                     isWrongBookClicked(btnPass);
 
 
-                } catch (NullPointerException e) {
+                } catch (NullPointerException e2) {
                     String cover_small = "";
                     String cover_medium = "";
                     String cover_large = "";
@@ -153,34 +227,39 @@ public class isbnAct extends isbnActivity {
                 //TODO: pop up yap objeyi firebase e yolla kaydet
 
 
-            } catch (MalformedURLException e) {
+            } catch (MalformedURLException e1) {
                 e.printStackTrace();
-                Toast.makeText(this, "1 rd exception", Toast.LENGTH_LONG).show();
-            } catch (IOException e) {
+                Toast.makeText(getApplicationContext(), "1 rd exception", Toast.LENGTH_LONG).show();
+            } catch (IOException e1) {
                 e.printStackTrace();
-                Toast.makeText(this, "2 rd exception", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "2 rd exception", Toast.LENGTH_LONG).show();
 
-            } catch (JSONException e) {
+            } catch (JSONException e1) {
                 e.printStackTrace();
+            } catch (NullPointerException e1){
+                Toast.makeText(getApplicationContext(), "This isbn is not exist in our database !", Toast.LENGTH_LONG).show();
             }
-        } else {
-            Toast.makeText(this, "Entry does not fit the standart rules", Toast.LENGTH_LONG).show();
+
         }
+
+    }else{
+        Toast.makeText(this, "Entry does not fit the standart rules", Toast.LENGTH_LONG).show();
     }
+
+}
 
     @Override
     public void isClosePopUpClicked(TextView imgClose) {
-            imgClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    myDialog.dismiss();
-                    EditText isbnET = (EditText) findViewById(R.id.isbnET);
-                    isbnET.setText("");
-                    Toast.makeText(getApplicationContext(), "Let' s try another ISBN number !", Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-
+        imgClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+                EditText isbnET = (EditText) findViewById(R.id.isbnET);
+                isbnET.setText("");
+                Toast.makeText(getApplicationContext(), "Let' s try another ISBN number !", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
 
     @Override
@@ -210,7 +289,6 @@ public class isbnAct extends isbnActivity {
         });
 
     }
-
 
 
     public static Bitmap getBitmapFromURL(String src) {
