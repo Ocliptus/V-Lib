@@ -34,6 +34,7 @@ public class SignUpAct extends SignUpActivity {
             return;
         }
 
+
         if (checkFields()) {
             FirebaseImpl.getInstance(this)
                     .getFirebaseAuth()

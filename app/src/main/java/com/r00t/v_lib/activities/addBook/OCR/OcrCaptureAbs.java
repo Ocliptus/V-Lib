@@ -352,7 +352,7 @@ public abstract class OcrCaptureAbs extends AppCompatActivity {
     }
 
     protected abstract void openPopUp();
-
+    protected abstract String correctISBN(String isbn);
 }
 
 

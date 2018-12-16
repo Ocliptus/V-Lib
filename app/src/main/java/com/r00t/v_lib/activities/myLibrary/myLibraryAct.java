@@ -11,7 +11,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.r00t.v_lib.R;
 import com.r00t.v_lib.activities.addBook.addBookAct;
-import com.r00t.v_lib.activities.notificatins.notificationPageAct;
+import com.r00t.v_lib.activities.notifications.notificationPageAct;
 import com.r00t.v_lib.activities.start.StartAct;
 import com.r00t.v_lib.data.Book;
 import com.r00t.v_lib.data.FirebaseImpl;

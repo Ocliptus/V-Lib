@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,11 +22,9 @@ import com.google.firebase.firestore.auth.User;
 import com.r00t.v_lib.R;
 import com.r00t.v_lib.data.Book;
 import com.r00t.v_lib.data.FirebaseImpl;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -101,7 +98,7 @@ public class isbnAct extends isbnActivity {
                             authorsTV.setText(book.getAuthors());
                             publishPlacesTV.setText(book.getPublish_places());
                             publishDateTV.setText(book.getPublishDate());
-                            cover_medium_view.setImageBitmap(getBitmapFromURL(book.getCover_medium()));
+
                             myDialog.dismiss();
                             myDialog.show();
                             isAddLibraryClicked(isbn, book, btnAdd);

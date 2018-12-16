@@ -331,7 +331,7 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
 
     public boolean checkBook(String isbn) {
         Log.i(TAG, "checkBook in");
-        Log.i(TAG, "isbn: "+isbn);
+        Log.i(TAG, "isbn:"+isbn);
         FirebaseImpl.getInstance(this)
                 .getFirestore()
                 .collection("bookDetails")
@@ -355,7 +355,11 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
                         myDialog.getTvTitle().setText(bookToAdd.getTitle());
                         myDialog.getTvAuthors().setText(bookToAdd.getAuthors());
                         myDialog.getTvPublishDate().setText(bookToAdd.getPublishDate());
-                        myDialog.getImgCoverView().setImageBitmap(getBitmapFromURL(bookToAdd.getCover_medium()));
+                        myDialog.getTvNumberOfPages().setText(bookToAdd.getNumber_of_pages());
+                        Log.i(TAG, "onComplete: "+bookToAdd.getCover_medium());
+                        ImageView cover_medium2 = findViewById(R.id.cover_medium_view2);
+                        cover_medium2.setImageBitmap(getBitmapFromURL(bookToAdd.getCover_medium()));
+                        //myDialog.getImgCoverView().setImageBitmap(getBitmapFromURL(bookToAdd.getCover_medium()));
                         myDialog.show();
                         isExist = true;
                     } else {
@@ -377,18 +381,38 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
         return isExist;
 
     }
-
+    @Override
+    protected String correctISBN(String isbn) {
+        if(isbn.contains("-")){
+            String[] isbnArray = isbn.split("[-]");
+            isbn="";
+            for(int i = 0; i<isbnArray.length; i++)
+            {
+                isbn+=isbnArray[i];
+            }
+        }
+        if (isbn.contains(" ")){
+            String[] isbnArray = isbn.split("[ ]");
+            isbn="";
+            for(int i = 0; i<isbnArray.length; i++)
+            {
+                isbn+=isbnArray[i];
+            }
+        }
+        return isbn;
+    }
     @Override
     protected void switchStructure(MethodCase methodCase) {
         switch (currentDetail) {
             case ISBN:
                 if (methodCase == MethodCase.btnSendClicked) {
-                    if (checkBook(etDetails.getText().toString())) {
+                    String isbn = correctISBN(etDetails.getText().toString());
+                    if (checkBook(isbn)) {
                         Log.i(TAG, "checkBook(etDetails.getText().toString())");
                     } else {
                         Log.i(TAG, "else");
-                        bookToAdd.setIsbn(etDetails.getText().toString());
-                        myDialog.getTvIsbn().setText(etDetails.getText().toString());
+                        bookToAdd.setIsbn(isbn);
+                        myDialog.getTvIsbn().setText(isbn);
                         btnSend.setText("Done");
                         etDetails.setText("");
                         currentDetail = BookDetailEnum.TITLE;
