@@ -108,7 +108,13 @@ public class Book implements Serializable {
                 " Publish Date:" + publishDate+" Title : " + title +" Small Cover:" +cover_small+" Medium Cover:" + cover_medium +
                 " Large Cover :"+cover_large+" Authors:" + authors+" Publish Places:"+ publish_places;
     }
-
+    public Book(){
+        //for add via camera
+        cover_medium ="";
+        cover_small="";
+        urlBook = "";
+        publish_places="";
+    }
     public Book(String isbn, String weight, String urlBook, String number_of_pages
             , String publishDate, String title, String cover_small, String cover_medium
                 , String cover_large, String authors, String publish_places) {
