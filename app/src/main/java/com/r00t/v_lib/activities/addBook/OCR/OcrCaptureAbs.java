@@ -100,7 +100,7 @@ public abstract class OcrCaptureAbs extends AppCompatActivity {
 
     protected EditText etDetails;
     protected Book bookToAdd = new Book();
-    protected BookDetailEnum currentDetail = BookDetailEnum.TITLE;
+    protected BookDetailEnum currentDetail = BookDetailEnum.ISBN;
     protected OcrPopUp myDialog;
 
     /**

@@ -54,14 +54,12 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
                 for (Text t:((Line)text).getComponents()
                      ) {
                     elements.add((Element)t);
-                    Log.i("GELIYOOOO GELIYOOOOOOOOOOO",
-                            "-------------------------------text:  "+t.getValue());
+
                 }
             }
             for ( Element e :elements
                  ) {
                 if (item != null && item.getValue() != null) {
-                    Log.d("OcrDetectorProcessor", "Text detected! " + item.getValue());
                     OcrGraphic graphic = new OcrGraphic(graphicOverlay, e);
                     graphicOverlay.add(graphic);
                 }

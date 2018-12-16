@@ -31,6 +31,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.vision.text.Element;
 import com.google.android.gms.vision.text.Line;
@@ -329,32 +330,52 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
     }
 
     public boolean checkBook(String isbn) {
-
+        Log.i(TAG, "checkBook in");
+        Log.i(TAG, "isbn: "+isbn);
         FirebaseImpl.getInstance(this)
                 .getFirestore()
                 .collection("bookDetails")
                 .document(isbn).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                Book book = task.getResult().toObject(Book.class);
-                if (book != null) {
-                    Toast.makeText(graphicOverlay.getContext(), "In", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "onComplete in");
 
-                    if (book.getIsbn().equals(isbn)) {
-                        myDialog.getTvIsbn().setText(book.getIsbn());
-                        myDialog.getTvTitle().setText(book.getTitle());
-                        myDialog.getTvAuthors().setText(book.getAuthors());
-                        myDialog.getTvPublishDate().setText(book.getPublishDate());
-                        myDialog.getImgCoverView().setImageBitmap(getBitmapFromURL(book.getCover_medium()));
+                bookToAdd = task.getResult().toObject(Book.class);
+
+
+                Log.i(TAG, "isBookNull: " + ((Boolean)(bookToAdd == null)).toString());
+                if(task.isSuccessful()){
+                    Log.i(TAG, "Task is succesfull");
+                if (bookToAdd != null) {
+                    Log.i(TAG, "Book != bull");
+                    if (bookToAdd.getIsbn().equals(isbn)) {
+                        Log.i(TAG, "bookToAdd.getIsbn().equals(isbn)");
+                        myDialog.getTvIsbn().setText(bookToAdd.getIsbn());
+                        myDialog.getTvTitle().setText(bookToAdd.getTitle());
+                        myDialog.getTvAuthors().setText(bookToAdd.getAuthors());
+                        myDialog.getTvPublishDate().setText(bookToAdd.getPublishDate());
+                        myDialog.getImgCoverView().setImageBitmap(getBitmapFromURL(bookToAdd.getCover_medium()));
                         myDialog.show();
                         isExist = true;
-                    } else
+                    } else {
                         isExist = false;
-                } else
+                        Log.i(TAG, "inner else");
+
+                    }
+
+                } else {
                     isExist = false;
+                    Log.i(TAG, "outer else");
+
+                }
+                }else
+                    Log.i(TAG, "Task is failed");
+
             }
         });
         return isExist;
+
     }
 
     @Override
@@ -362,11 +383,10 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
         switch (currentDetail) {
             case ISBN:
                 if (methodCase == MethodCase.btnSendClicked) {
-                    if (checkBook(etDetails.getText().toString())){
-                        Toast.makeText(graphicOverlay.getContext(), "In", Toast.LENGTH_SHORT).show();
-                    }
-
-                    else {
+                    if (checkBook(etDetails.getText().toString())) {
+                        Log.i(TAG, "checkBook(etDetails.getText().toString())");
+                    } else {
+                        Log.i(TAG, "else");
                         bookToAdd.setIsbn(etDetails.getText().toString());
                         myDialog.getTvIsbn().setText(etDetails.getText().toString());
                         btnSend.setText("Done");

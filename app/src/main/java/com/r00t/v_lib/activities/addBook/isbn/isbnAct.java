@@ -56,7 +56,8 @@ public class isbnAct extends isbnActivity {
     public void isbnAddClicked() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        if (((EditText) findViewById(R.id.isbnET)).getText().toString().matches("[\\d]{10}|[\\d]{13}")) {
+        if (((EditText) findViewById(R.id.isbnET))
+                .getText().toString().matches("[\\d]{10}|[\\d]{13}")) {
             final String isbn = ((EditText) findViewById(R.id.isbnET)).getText().toString();
             FirebaseImpl.getInstance(this)
                     .getFirestore()
