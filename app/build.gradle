@@ -59,7 +59,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     //Algolia
     implementation 'com.algolia:algoliasearch-android:3.+'
-// Google Cloud Vision API
+    // Google Cloud Vision API
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:support-v4:28.1.0'
     implementation 'com.android.support:design:28.1.0'
