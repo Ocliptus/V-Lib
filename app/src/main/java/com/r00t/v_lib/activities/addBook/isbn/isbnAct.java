@@ -59,6 +59,7 @@ public class isbnAct extends isbnActivity {
         if (((EditText) findViewById(R.id.isbnET))
                 .getText().toString().matches("[\\d]{10}|[\\d]{13}")) {
             final String isbn = ((EditText) findViewById(R.id.isbnET)).getText().toString();
+            System.out.println("+=+ " + isbn);
             FirebaseImpl.getInstance(this)
                     .getFirestore()
                     .collection("bookDetails")
