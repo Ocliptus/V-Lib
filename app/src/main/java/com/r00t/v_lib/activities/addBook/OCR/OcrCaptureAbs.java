@@ -298,7 +298,7 @@ public abstract class OcrCaptureAbs extends AppCompatActivity {
             tvPublishDate = findViewById(R.id.publishDateTV);
 
             tvAuthors = findViewById(R.id.authorsTV);
-            imgCoverView = findViewById(R.id.cover_medium_view2);
+
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -308,7 +308,16 @@ public abstract class OcrCaptureAbs extends AppCompatActivity {
                             .collection("bookDetails")
                             .document(bookToAdd.getIsbn())
                             .set(bookToAdd);
+                    Toast.makeText(graphicOverlay.getContext(), "New book ha ? Hmmm yummy !", Toast.LENGTH_SHORT).show();
+                    myDialog.dismiss();
 
+                }
+            });
+            btnPass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(graphicOverlay.getContext(), "Let's try another ISBN !", Toast.LENGTH_SHORT).show();
+                    myDialog.dismiss();
                 }
             });
 

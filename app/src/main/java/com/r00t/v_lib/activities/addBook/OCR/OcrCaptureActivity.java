@@ -357,9 +357,6 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
                         myDialog.getTvPublishDate().setText(bookToAdd.getPublishDate());
                         myDialog.getTvNumberOfPages().setText(bookToAdd.getNumber_of_pages());
                         Log.i(TAG, "onComplete: "+bookToAdd.getCover_medium());
-                        ImageView cover_medium2 = findViewById(R.id.cover_medium_view2);
-                        cover_medium2.setImageBitmap(getBitmapFromURL(bookToAdd.getCover_medium()));
-                        //myDialog.getImgCoverView().setImageBitmap(getBitmapFromURL(bookToAdd.getCover_medium()));
                         myDialog.show();
                         isExist = true;
                     } else {

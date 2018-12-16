@@ -56,4 +56,5 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
     protected abstract void explorePageClicked();
     @OnClick(R.id.nav_Notifications)
     protected abstract void notificationsClicked();
+
 }

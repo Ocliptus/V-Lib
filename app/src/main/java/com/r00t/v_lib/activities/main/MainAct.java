@@ -67,4 +67,5 @@ public class MainAct extends MainActivity {
     protected void notificationsClicked(){startActivity(new Intent(this, notificationPageAct.class));}
 
 
+
 }
