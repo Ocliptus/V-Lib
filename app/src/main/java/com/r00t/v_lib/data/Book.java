@@ -125,4 +125,18 @@ public class Book implements Serializable {
         this.isbn = isbn;
         this.title=title;
     }
+    public Book() {
+        this.cover_small = cover_small;
+        this.cover_medium = cover_medium;
+        this.cover_large = cover_large;
+        this.authors = authors;
+        this.weight = weight;
+        this.urlBook = urlBook;
+        this.number_of_pages = number_of_pages;
+        this.publishDate = publishDate;
+        this.authors = authors;
+        this.publish_places = publish_places;
+        this.isbn = isbn;
+        this.title=title;
+    }
 }

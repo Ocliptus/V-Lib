@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.auth.User;
 import com.r00t.v_lib.R;
 import com.r00t.v_lib.data.Book;
 import com.r00t.v_lib.data.FirebaseImpl;
@@ -49,204 +50,165 @@ public class isbnAct extends isbnActivity {
         setContentView(R.layout.activity_isbn);
         ButterKnife.bind(this);
         myDialog = new Dialog(this);
-
-
     }
 
     @Override
     public void isbnAddClicked() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
         if (((EditText) findViewById(R.id.isbnET)).getText().toString().matches("[\\d]{10}|[\\d]{13}")) {
-
-
             final String isbn = ((EditText) findViewById(R.id.isbnET)).getText().toString();
-            try {
+            FirebaseImpl.getInstance(this)
+                    .getFirestore()
+                    .collection("bookDetails")
+                    .document(isbn)
+                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        Book book = task.getResult().toObject(Book.class);
+                        if(book!=null){
+                            Toast.makeText(getApplicationContext(), "This book comes from firebase", Toast.LENGTH_LONG).show();
+                            TextView imgClose;
+                            ImageView cover_medium_view;
+                            Button btnAdd;
+                            Button btnPass;
+                            TextView titleTV;
+                            TextView isbnTV;
+                            TextView bookUrlTV;
+                            TextView numberOfPagesTV;
+                            TextView publishDateTV;
+                            TextView authorsTV;
+                            TextView publishPlacesTV;
+                            myDialog.setContentView(R.layout.add_book_popup);
+                            cover_medium_view = (ImageView) myDialog.findViewById(R.id.cover_medium_view);
+                            titleTV = (TextView) myDialog.findViewById(R.id.titleTV);
+                            isbnTV = (TextView) myDialog.findViewById(R.id.isbnTV);
+                            bookUrlTV = (TextView) myDialog.findViewById(R.id.bookUrlTV);
+                            numberOfPagesTV = (TextView) myDialog.findViewById(R.id.numberOfPagesTV);
+                            publishDateTV = (TextView) myDialog.findViewById(R.id.publishDateTV);
+                            authorsTV = (TextView) myDialog.findViewById(R.id.authorsTV);
+                            publishPlacesTV = (TextView) myDialog.findViewById(R.id.publishPlacesTV);
+                            imgClose = (TextView) myDialog.findViewById(R.id.popup_close);
+                            btnAdd = (Button) myDialog.findViewById(R.id.add_library);
+                            btnPass = (Button) myDialog.findViewById(R.id.wrong_book);
+                            titleTV.setText(book.getTitle());
+                            isbnTV.setText(book.getIsbn());
+                            bookUrlTV.setText(book.getUrlBook());
+                            numberOfPagesTV.setText(book.getNumber_of_pages());
+                            authorsTV.setText(book.getAuthors());
+                            publishPlacesTV.setText(book.getPublish_places());
+                            publishDateTV.setText(book.getPublishDate());
+                            cover_medium_view.setImageBitmap(getBitmapFromURL(book.getCover_medium()));
+                            myDialog.dismiss();
+                            myDialog.show();
+                            isAddLibraryClicked(isbn, book, btnAdd);
+                            isClosePopUpClicked(imgClose);
+                            isWrongBookClicked(btnPass);
+                        }else{
+                            try {
+                                //get URL content
+                                URL url;
+                                url = new URL(isbnSearch.urlCombine(isbn));
+                                URLConnection con = url.openConnection();
+                                // open the stream and put it into BufferedReader
+                                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                                String inputLine = "";
+                                inputLine = br.readLine();
+                                JSONObject obj = new JSONObject(inputLine);
+                                String objName = "ISBN:" + isbn;
+                                String weight = obj.getJSONObject(objName).optString("weight");
+                                String urlBook = obj.getJSONObject(objName).optString("url");
+                                String number_of_pages = obj.optJSONObject(objName).optString("number_of_pages");
+                                String publishDate = obj.optJSONObject(objName).optString("publish_date");
+                                String title = obj.optJSONObject(objName).optString("title");
+                                try {
+                                    JSONObject cover = obj.optJSONObject(objName).optJSONObject("cover");
+                                    String cover_small = cover.optString("small");
+                                    String cover_medium = cover.optString("medium");
+                                    String cover_large = cover.optString("large");
+                                    JSONArray authors = obj.optJSONObject(objName).optJSONArray("authors");
+                                    String author = "";
+                                    JSONArray publishPlaces = obj.optJSONObject(objName).optJSONArray("publish_places");
+                                    String publish_places = "";
+                                    int i;
+                                    for (i = 0; i < authors.length(); i++) {
+                                        String tempInput = authors.get(i).toString();
+                                        JSONObject tempObj = new JSONObject(tempInput);
+                                        author = author + " / " + tempObj.optString("name");
+                                        String tempInput2 = publishPlaces.get(i).toString();
+                                        JSONObject tempObj2 = new JSONObject(tempInput2);
+                                        publish_places = publish_places + " / " + tempObj2.optString("name");
+                                    }
+                                    Book book2 = new Book(isbn, weight, urlBook, number_of_pages, publishDate,
+                                            title, cover_small, cover_medium, cover_large, author, publish_places);
+                                    Toast.makeText(getApplicationContext(), "This book comes from OpenLibrary API", Toast.LENGTH_LONG).show();
+                                    TextView imgClose;
+                                    ImageView cover_medium_view;
+                                    Button btnAdd;
+                                    Button btnPass;
+                                    TextView titleTV;
+                                    TextView isbnTV;
+                                    TextView bookUrlTV;
+                                    TextView numberOfPagesTV;
+                                    TextView publishDateTV;
+                                    TextView authorsTV;
+                                    TextView publishPlacesTV;
+                                    myDialog.setContentView(R.layout.add_book_popup);
+                                    cover_medium_view = (ImageView) myDialog.findViewById(R.id.cover_medium_view);
+                                    titleTV = (TextView) myDialog.findViewById(R.id.titleTV);
+                                    isbnTV = (TextView) myDialog.findViewById(R.id.isbnTV);
+                                    bookUrlTV = (TextView) myDialog.findViewById(R.id.bookUrlTV);
+                                    numberOfPagesTV = (TextView) myDialog.findViewById(R.id.numberOfPagesTV);
+                                    publishDateTV = (TextView) myDialog.findViewById(R.id.publishDateTV);
+                                    authorsTV = (TextView) myDialog.findViewById(R.id.authorsTV);
+                                    publishPlacesTV = (TextView) myDialog.findViewById(R.id.publishPlacesTV);
+                                    imgClose = (TextView) myDialog.findViewById(R.id.popup_close);
+                                    btnAdd = (Button) myDialog.findViewById(R.id.add_library);
+                                    btnPass = (Button) myDialog.findViewById(R.id.wrong_book);
+                                    titleTV.setText(title);
+                                    isbnTV.setText(isbn);
+                                    bookUrlTV.setText(urlBook);
+                                    numberOfPagesTV.setText(number_of_pages);
+                                    authorsTV.setText(author);
+                                    publishPlacesTV.setText(publish_places);
+                                    publishDateTV.setText(publishDate);
+                                    titleTV.setText(title);
+                                    cover_medium_view.setImageBitmap(getBitmapFromURL(cover_medium));
+                                    myDialog.dismiss();
+                                    myDialog.show();
+                                    isAddLibraryClicked(isbn, book2, btnAdd);
+                                    isClosePopUpClicked(imgClose);
+                                    isWrongBookClicked(btnPass);
+                                } catch (NullPointerException e2) {
+                                    String cover_small = "";
+                                    String cover_medium = "";
+                                    String cover_large = "";
+                                }
+                            } catch (MalformedURLException e1) {
+                                e1.printStackTrace();
+                                Toast.makeText(getApplicationContext(), "1 rd exception", Toast.LENGTH_LONG).show();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                                Toast.makeText(getApplicationContext(), "2 rd exception", Toast.LENGTH_LONG).show();
 
-                FirebaseImpl.getInstance(this).getFirestore().collection("bookDetails").document(isbn).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(@NonNull DocumentSnapshot doc) {
-                        Toast.makeText(getApplicationContext(), "This book details comes from firebase", Toast.LENGTH_LONG).show();
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
+                                Toast.makeText(getApplicationContext(), "This isbn is not exist in our database !", Toast.LENGTH_LONG).show();
+                            } catch (NullPointerException e1) {
+                                Toast.makeText(getApplicationContext(), "This isbn is not exist in our database !", Toast.LENGTH_LONG).show();
+                            }
 
-                        Book book = new Book("", "", "", "", "", "", "", "", "", "", "");
-                        book.setIsbn(doc.get("isbn").toString());
-                        String isbnCheck = book.getIsbn();
-                        book.setWeight(doc.get("weight").toString());
-                        book.setUrlBook(doc.get("urlBook").toString());
-                        book.setNumber_of_pages(doc.get("number_of_pages").toString());
-                        book.setPublishDate(doc.get("publishDate").toString());
-                        book.setTitle(doc.get("title").toString());
-                        book.setCover_small(doc.get("cover_small").toString());
-                        book.setCover_medium(doc.get("cover_medium").toString());
-                        book.setCover_large(doc.get("cover_large").toString());
-                        book.setAuthors(doc.get("authors").toString());
-                        book.setPublish_places(doc.get("publish_places").toString());
-
-                        TextView imgClose;
-                        ImageView cover_medium_view;
-                        Button btnAdd;
-                        Button btnPass;
-                        TextView titleTV;
-                        TextView isbnTV;
-                        TextView bookUrlTV;
-                        TextView numberOfPagesTV;
-                        TextView publishDateTV;
-                        TextView authorsTV;
-                        TextView publishPlacesTV;
-
-                        myDialog.setContentView(R.layout.add_book_popup);
-                        cover_medium_view = (ImageView) myDialog.findViewById(R.id.cover_medium_view);
-                        titleTV = (TextView) myDialog.findViewById(R.id.titleTV);
-                        isbnTV = (TextView) myDialog.findViewById(R.id.isbnTV);
-                        bookUrlTV = (TextView) myDialog.findViewById(R.id.bookUrlTV);
-                        numberOfPagesTV = (TextView) myDialog.findViewById(R.id.numberOfPagesTV);
-                        publishDateTV = (TextView) myDialog.findViewById(R.id.publishDateTV);
-                        authorsTV = (TextView) myDialog.findViewById(R.id.authorsTV);
-                        publishPlacesTV = (TextView) myDialog.findViewById(R.id.publishPlacesTV);
-                        imgClose = (TextView) myDialog.findViewById(R.id.popup_close);
-                        btnAdd = (Button) myDialog.findViewById(R.id.add_library);
-                        btnPass = (Button) myDialog.findViewById(R.id.wrong_book);
-
-                        titleTV.setText(book.getTitle());
-                        isbnTV.setText(isbn);
-                        bookUrlTV.setText(book.getUrlBook());
-                        numberOfPagesTV.setText(book.getNumber_of_pages());
-                        authorsTV.setText(book.getAuthors());
-                        publishPlacesTV.setText(book.getPublish_places());
-                        publishDateTV.setText(book.getPublishDate());
-
-
-                        cover_medium_view.setImageBitmap(getBitmapFromURL(book.getCover_medium()));
-                        myDialog.dismiss();
-                        myDialog.show();
-                        isAddLibraryClicked(isbn, book, btnAdd);
-                        isClosePopUpClicked(imgClose);
-                        isWrongBookClicked(btnPass);
-
-
-
+                        }
 
                     }
-
-                });
-
-        }catch(NullPointerException e){
-            try {
-                //get URL content
-                Toast.makeText(getApplicationContext(), "This book details comes from openlibrary", Toast.LENGTH_LONG).show();
-                URL url;
-                url = new URL(isbnSearch.urlCombine(isbn));
-
-                URLConnection con = url.openConnection();
-
-                // open the stream and put it into BufferedReader
-                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-
-                String inputLine = "";
-                inputLine = br.readLine();
-
-                JSONObject obj = new JSONObject(inputLine);
-                String objName = "ISBN:" + isbn;
-                String weight = obj.getJSONObject(objName).optString("weight");
-                String urlBook = obj.getJSONObject(objName).optString("url");
-                String number_of_pages = obj.optJSONObject(objName).optString("number_of_pages");
-                String publishDate = obj.optJSONObject(objName).optString("publish_date");
-                String title = obj.optJSONObject(objName).optString("title");
-                try {
-                    JSONObject cover = obj.optJSONObject(objName).optJSONObject("cover");
-                    String cover_small = cover.optString("small");
-                    String cover_medium = cover.optString("medium");
-                    String cover_large = cover.optString("large");
-                    JSONArray authors = obj.optJSONObject(objName).optJSONArray("authors");
-                    String author = "";
-                    JSONArray publishPlaces = obj.optJSONObject(objName).optJSONArray("publish_places");
-                    String publish_places = "";
-                    int i;
-                    for (i = 0; i < authors.length(); i++) {
-                        String tempInput = authors.get(i).toString();
-                        JSONObject tempObj = new JSONObject(tempInput);
-                        author = author + " / " + tempObj.optString("name");
-                        String tempInput2 = publishPlaces.get(i).toString();
-                        JSONObject tempObj2 = new JSONObject(tempInput2);
-                        publish_places = publish_places + " / " + tempObj2.optString("name");
-                    }
-
-
-                    Book book2 = new Book(isbn, weight, urlBook, number_of_pages, publishDate,
-                            title, cover_small, cover_medium, cover_large, author, publish_places);
-
-                    TextView imgClose;
-                    ImageView cover_medium_view;
-                    Button btnAdd;
-                    Button btnPass;
-                    TextView titleTV;
-                    TextView isbnTV;
-                    TextView bookUrlTV;
-                    TextView numberOfPagesTV;
-                    TextView publishDateTV;
-                    TextView authorsTV;
-                    TextView publishPlacesTV;
-
-                    myDialog.setContentView(R.layout.add_book_popup);
-                    cover_medium_view = (ImageView) myDialog.findViewById(R.id.cover_medium_view);
-                    titleTV = (TextView) myDialog.findViewById(R.id.titleTV);
-                    isbnTV = (TextView) myDialog.findViewById(R.id.isbnTV);
-                    bookUrlTV = (TextView) myDialog.findViewById(R.id.bookUrlTV);
-                    numberOfPagesTV = (TextView) myDialog.findViewById(R.id.numberOfPagesTV);
-                    publishDateTV = (TextView) myDialog.findViewById(R.id.publishDateTV);
-                    authorsTV = (TextView) myDialog.findViewById(R.id.authorsTV);
-                    publishPlacesTV = (TextView) myDialog.findViewById(R.id.publishPlacesTV);
-                    imgClose = (TextView) myDialog.findViewById(R.id.popup_close);
-                    btnAdd = (Button) myDialog.findViewById(R.id.add_library);
-                    btnPass = (Button) myDialog.findViewById(R.id.wrong_book);
-
-                    titleTV.setText(title);
-                    isbnTV.setText(isbn);
-                    bookUrlTV.setText(urlBook);
-                    numberOfPagesTV.setText(number_of_pages);
-                    authorsTV.setText(author);
-                    publishPlacesTV.setText(publish_places);
-                    publishDateTV.setText(publishDate);
-                    titleTV.setText(title);
-
-                    cover_medium_view.setImageBitmap(getBitmapFromURL(cover_medium));
-                    myDialog.dismiss();
-                    myDialog.show();
-                    isAddLibraryClicked(isbn, book2, btnAdd);
-                    isClosePopUpClicked(imgClose);
-                    isWrongBookClicked(btnPass);
-
-
-                } catch (NullPointerException e2) {
-                    String cover_small = "";
-                    String cover_medium = "";
-                    String cover_large = "";
                 }
-
-                //TODO: pop up yap objeyi firebase e yolla kaydet
-
-
-            } catch (MalformedURLException e1) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "1 rd exception", Toast.LENGTH_LONG).show();
-            } catch (IOException e1) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "2 rd exception", Toast.LENGTH_LONG).show();
-
-            } catch (JSONException e1) {
-                e.printStackTrace();
-            } catch (NullPointerException e1){
-                Toast.makeText(getApplicationContext(), "This isbn is not exist in our database !", Toast.LENGTH_LONG).show();
-            }
-
+            });
+        } else {
+            Toast.makeText(this, "Entry does not fit the standart rules", Toast.LENGTH_LONG).show();
         }
-
-    }else{
-        Toast.makeText(this, "Entry does not fit the standart rules", Toast.LENGTH_LONG).show();
     }
 
-}
 
     @Override
     public void isClosePopUpClicked(TextView imgClose) {

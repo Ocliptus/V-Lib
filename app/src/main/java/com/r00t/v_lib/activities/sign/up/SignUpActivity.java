@@ -19,6 +19,8 @@ public abstract class SignUpActivity extends AppCompatActivity {
     protected EditText userNameET;
     @BindView(R.id.passwordET)
     protected EditText passwordET;
+    @BindView(R.id.nameSurnameET)
+    protected EditText nameSurnameET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

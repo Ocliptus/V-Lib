@@ -50,6 +50,12 @@
                 android:paddingTop="10dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="20dp">
+                <EditText
+                    android:id="@+id/nameSurnameET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name and Surname"
+                     />
 
                 <EditText
                     android:id="@+id/userNameET"

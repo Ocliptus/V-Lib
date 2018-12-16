@@ -4,13 +4,37 @@ import java.io.Serializable;
 
 public class UserDetails implements Serializable {
     private String id;
-    private String userName;
+    private String nameAndSurname;
     private String eMail;
     private String books;
     private String followers;
     private String followed;
     private String posts;
     private int postCount;
+
+    public UserDetails(String id, String nameAndSurname, String eMail, String books,
+                       String followers, String followed, String posts, int postCount) {
+
+        this.id = id;
+        this.nameAndSurname = nameAndSurname;
+        this.eMail = eMail;
+        this.books = books;
+        this.followers = followers;
+        this.followed = followed;
+        this.posts = posts;
+        this.postCount = postCount;
+    }
+
+    public UserDetails() {
+        this.id = id;
+        this.nameAndSurname = nameAndSurname;
+        this.eMail = eMail;
+        this.books = books;
+        this.followers = followers;
+        this.followed = followed;
+        this.posts = posts;
+        this.postCount = postCount;
+    }
 
     public int getPostCount() {
         return postCount;
@@ -68,11 +92,9 @@ public class UserDetails implements Serializable {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getNameAndSurname() {
+        return nameAndSurname;
     }
 
-    public void setUserName(String data) {
-        this.userName = userName;
-    }
+    public void setNameAndSurname(String nameAndSurname) { this.nameAndSurname = nameAndSurname;}
 }

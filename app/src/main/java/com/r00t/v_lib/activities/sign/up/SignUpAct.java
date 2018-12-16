@@ -16,27 +16,13 @@ import com.r00t.v_lib.activities.start.StartAct;
 import com.r00t.v_lib.data.FirebaseImpl;
 import com.r00t.v_lib.models.UserDetails;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import androidx.annotation.NonNull;
 
 public class SignUpAct extends SignUpActivity {
-    @Override
-    protected boolean checkPassword() {
-        //TODO: regexi düzelt
-        return ((EditText)findViewById(R.id.passwordET)).getText().toString().matches(
-                "[\\d\\w\\s]{6,}"
-        );
-    }
 
-    @Override
-    protected boolean checkEmail() {
-        return ((EditText)findViewById(R.id.userNameET)).getText().toString().matches(
-                "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*"+
-                        "|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")" +
-                        "@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}" +
-                        "(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")
-                ;
-    }
-//
     @Override
     protected void onSignUpClicked() {
         if(!checkEmail()){
@@ -58,8 +44,13 @@ public class SignUpAct extends SignUpActivity {
                             if (task.isSuccessful()) {
                                 String uid = task.getResult().getUser().getUid();
                                 String eMail = ((EditText)findViewById(R.id.userNameET)).getText().toString();
-                                String userName = (eMail.split("[@]")[0]);
-                                createDatabaseInstance(uid,userName,eMail,"","","","",0);
+                                String nameAndSurname =((EditText)findViewById(R.id.nameSurnameET)).getText().toString();
+                                Toast.makeText(
+                                        SignUpAct.this,
+                                        nameAndSurname,
+                                        Toast.LENGTH_LONG
+                                ).show();
+                                createDatabaseInstance(uid,nameAndSurname,eMail,"","","","",0);
                             } else {
                                 Toast.makeText(
                                         SignUpAct.this,
@@ -74,20 +65,11 @@ public class SignUpAct extends SignUpActivity {
             //TODO: Empty fields
         }
     }
-
-    private boolean checkFields() {
-        if (TextUtils.isEmpty(userNameET.getText().toString()))
-            return false;
-        if (TextUtils.isEmpty(passwordET.getText().toString()))
-            return false;
-        return true;
-    }
-
-    private void createDatabaseInstance(String uid,String userName,String eMail, String books,
+    private void createDatabaseInstance(String uid,String nameAndSurname,String eMail, String books,
                                         String followers, String followed, String posts, int postCount) {
         UserDetails temp = new UserDetails();
         temp.setId(uid);
-        temp.setUserName(userName);
+        temp.setUserName(nameAndSurname);
         temp.seteMail(eMail);
         temp.setBooks(books);
         temp.setFollowers(followers);
@@ -118,4 +100,30 @@ public class SignUpAct extends SignUpActivity {
             }
         });
     }
+
+    private boolean checkFields() {
+        if (TextUtils.isEmpty(userNameET.getText().toString()))
+            return false;
+        if (TextUtils.isEmpty(passwordET.getText().toString()))
+            return false;
+        return true;
+    }
+    @Override
+    protected boolean checkPassword() {
+        return ((EditText)findViewById(R.id.passwordET)).getText().toString().matches(
+                "[\\d\\w\\s]{6,}"
+        );
+    }
+
+    @Override
+    protected boolean checkEmail() {
+        return ((EditText)findViewById(R.id.userNameET)).getText().toString().matches(
+                "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*"+
+                        "|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")" +
+                        "@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}" +
+                        "(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")
+                ;
+    }
+
+
 }
