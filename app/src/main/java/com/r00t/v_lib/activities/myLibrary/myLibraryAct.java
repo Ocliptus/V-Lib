@@ -6,6 +6,9 @@ import android.view.MenuItem;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.r00t.v_lib.R;
 import com.r00t.v_lib.activities.addBook.addBookAct;
 import com.r00t.v_lib.activities.notificatins.notificationPageAct;
@@ -18,21 +21,48 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class myLibraryAct extends myLibraryActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_library);
-        ScrollView s = findViewById(R.id.myLibScroll);
-    }
+    private List<Book> dataSet;
+    private BookAdapter bookAdapter;
 
     @Override
     public void initViews() {
-        bookList = new ArrayList<>();
-        bookAdapter = new BookAdapter((ArrayList<Book>)bookList);
+        dataSet = new ArrayList<>();
+        bookAdapter = new BookAdapter(dataSet);
+        sectorsRV.setLayoutManager(new LinearLayoutManager(this));
+        sectorsRV.setItemAnimator(new DefaultItemAnimator());
+        sectorsRV.setAdapter(bookAdapter);
+    }
 
+    @Override
+    protected void updateDataSet() {
+        FirebaseImpl.getInstance(this)
+                .getFirestore()
+                .collection("book")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        updateUI(queryDocumentSnapshots.toObjects(Book.class));
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+    public void updateUI(List<Book> newDataSet) {
+        dataSet.clear();
+        dataSet.addAll(newDataSet);
+        bookAdapter.notifyDataSetChanged();
     }
 
     @Override
