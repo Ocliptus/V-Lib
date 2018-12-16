@@ -28,7 +28,7 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
     lintOptions {
-        lintConfig file("C:\\VLib\\app\\src\\main\\java\\com\\r00t\\v_lib\\lint.xml")
+        lintConfig file("C:\\Users\\GunesBizim\\gunes-doga\\app\\src\\main\\java\\com\\r00t\\v_lib\\lint.xml")
     }
 }
 repositories {

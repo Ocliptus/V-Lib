@@ -23,6 +23,15 @@ public abstract class addBookActivity extends AppCompatActivity {
     protected abstract void isbnButtonClicked();
     @OnClick(R.id.ocrButton)
     protected abstract void ocrButtonClicked();
+    @OnClick(R.id.nav_home)
+    protected abstract void homeViewClicked();
+    @OnClick(R.id.nav_explore)
+    protected abstract void exploreViewClicked();
+    @OnClick(R.id.nav_Notifications)
+    protected abstract void notificationViewClicked();
+    @OnClick(R.id.nav_profile)
+    protected abstract void profileViewClicked();
+
 }
 
 

@@ -3,7 +3,6 @@ package com.r00t.v_lib.activities.profilePage;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -12,7 +11,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.r00t.v_lib.R;
 import com.r00t.v_lib.data.FirebaseImpl;
 import com.r00t.v_lib.models.UserDetails;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +36,11 @@ public abstract class profilePageActivity extends AppCompatActivity implements N
         toggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
-        TextView usernameTV = findViewById(R.id.userNameTV);
+        TextView nameAndSurnameTV = findViewById(R.id.nameAndSurnameTV);
+        TextView postCountTV = findViewById(R.id.postCount);
+        TextView followerCountTV = findViewById(R.id.followerCount);
+        TextView followedCountTV = findViewById(R.id.folloedCount);
+
         final String userUID =FirebaseImpl.getInstance(this).getFirebaseUser().getUid();
         FirebaseImpl.getInstance(this).getFirestore().collection("users").document(userUID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -52,13 +54,8 @@ public abstract class profilePageActivity extends AppCompatActivity implements N
                    String followers = user.getFollowers();
                    int postCount = user.getPostCount();
                    String posts = user.getPosts();
-                   String userName = user.getUserName();
-                   Toast.makeText(getApplicationContext(), "UserID :" + userID + "Books : " + books +
-                           "E-Mail :" + eMail + "Followed : " + followed + "Followers : " + followers
-                           + "Post Count :" + postCount + "Posts : "+ posts + "User Name :" + userName, Toast.LENGTH_LONG).show();
-
-
-
+                   String nameAndSurname = user.getNameAndSurname();
+                   nameAndSurnameTV.setText(nameAndSurname);
                 }else{
                     Toast.makeText(getApplicationContext(), "Oops ! We couldn't get your account details ! Sorry :(", Toast.LENGTH_LONG).show();
                 }
@@ -72,6 +69,12 @@ public abstract class profilePageActivity extends AppCompatActivity implements N
         });
 
     }
+    @OnClick(R.id.nav_home)
+    protected abstract void homeViewClicked();
+    @OnClick(R.id.nav_explore)
+    protected abstract void explorePageViewClicked();
     @OnClick(R.id.nav_addBook)
     protected abstract void addBookViewClicked();
+    @OnClick(R.id.nav_Notifications)
+    protected abstract void notificationPageViewClicked();
 }

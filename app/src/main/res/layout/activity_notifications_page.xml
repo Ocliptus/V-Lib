@@ -2,28 +2,25 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".activities.main.MainActivity"
-    >
-
+    tools:context=".activities.notifications.notificationsPageActivity"
+    android:id="@+id/notificationpage_drawerlayout">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
+            android:id="@+id/Notifications_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="WORKING AREA!!"
             android:layout_centerInParent="true"
             android:textStyle="bold"
-            android:textSize="35dp"
-            android:textColor="#000"
-            android:textAlignment="center"
-            android:text="WORKING AREA WE'LL GET YOUR POSTS SOON"/>
-
+            android:textColor="#000000"
+            android:textSize="35dp"/>
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -37,7 +34,10 @@
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" >
+
+
+        </FrameLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
@@ -55,7 +55,6 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu" />
-
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

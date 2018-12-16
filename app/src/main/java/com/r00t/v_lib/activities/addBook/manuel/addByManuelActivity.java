@@ -14,8 +14,7 @@ public abstract class addByManuelActivity extends AppCompatActivity {
     protected final EditText etBookName = (EditText) findViewById(R.id.bookNameET),
                     etAuthour = (EditText)findViewById(R.id.writerNameET),
                     etPublisher = (EditText) findViewById(R.id.publisherET),
-                    etPublishedDate = (EditText)findViewById(R.id.publishDateET)
-            ;
+                    etPublishedDate = (EditText)findViewById(R.id.publishDateET);
     protected final Button btnAdd = (Button)findViewById(R.id.addBookButton);
     protected String queryString;
     @Override

@@ -30,12 +30,16 @@
         <activity android:name=".activities.addBook.manuel.addByManuelAct" />
         <activity android:name=".activities.myLibrary.myLibraryAct" />
         <activity android:name=".activities.addBook.OCR.OcrCaptureActivity" />
+        <activity android:name=".activities.profilePage.profilePageAct" />
+        <activity android:name=".activities.explore.explorePageAct" />
+        <activity android:name=".activities.addBook.isbn.isbnAct" />
+        <activity android:name=".activities.notifications.notificationPageAct"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".activities.addBook.isbn.isbnAct" />
+
     </application>
 
 </manifest>

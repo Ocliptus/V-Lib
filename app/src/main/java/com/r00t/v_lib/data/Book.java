@@ -103,21 +103,25 @@ public class Book implements Serializable {
     public void setPublish_places(String publish_places) {
         this.publish_places = publish_places;
     }
-    public String toString(){
-        return "ISBN:" + isbn + " Weight:" +weight+" Book URL:" +urlBook + " Number Of Pages:" + number_of_pages+
-                " Publish Date:" + publishDate+" Title : " + title +" Small Cover:" +cover_small+" Medium Cover:" + cover_medium +
-                " Large Cover :"+cover_large+" Authors:" + authors+" Publish Places:"+ publish_places;
+
+    public String toString() {
+        return "ISBN:" + isbn + " Weight:" + weight + " Book URL:" + urlBook + " Number Of Pages:" + number_of_pages +
+                " Publish Date:" + publishDate + " Title : " + title + " Small Cover:" + cover_small + " Medium Cover:" + cover_medium +
+                " Large Cover :" + cover_large + " Authors:" + authors + " Publish Places:" + publish_places;
     }
-    public Book(){
-        //for add via camera
-        cover_medium ="";
-        cover_small="";
-        urlBook = "";
-        publish_places="";
+
+    public Book(String empty) {
+        cover_medium = empty;
+        cover_small = empty;
+        cover_large = empty;
+        publish_places = empty;
+        urlBook = empty;
+        weight = empty;
     }
+
     public Book(String isbn, String weight, String urlBook, String number_of_pages
             , String publishDate, String title, String cover_small, String cover_medium
-                , String cover_large, String authors, String publish_places) {
+            , String cover_large, String authors, String publish_places) {
         this.cover_small = cover_small;
         this.cover_medium = cover_medium;
         this.cover_large = cover_large;
@@ -129,20 +133,21 @@ public class Book implements Serializable {
         this.authors = authors;
         this.publish_places = publish_places;
         this.isbn = isbn;
-        this.title=title;
+        this.title = title;
     }
+
     public Book() {
-        this.cover_small = cover_small;
-        this.cover_medium = cover_medium;
-        this.cover_large = cover_large;
-        this.authors = authors;
-        this.weight = weight;
-        this.urlBook = urlBook;
-        this.number_of_pages = number_of_pages;
-        this.publishDate = publishDate;
-        this.authors = authors;
-        this.publish_places = publish_places;
-        this.isbn = isbn;
-        this.title=title;
+        cover_small = "";
+        cover_medium = "";
+        cover_large = "";
+        authors = "";
+        weight = "";
+        urlBook = "";
+        number_of_pages = "";
+        publishDate = "";
+        authors = "";
+        publish_places = "";
+        isbn = "";
+        title = "";
     }
 }

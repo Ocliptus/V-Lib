@@ -7,7 +7,10 @@ import android.widget.Toast;
 
 import com.r00t.v_lib.R;
 import com.r00t.v_lib.activities.addBook.addBookAct;
+import com.r00t.v_lib.activities.explore.explorePageAct;
+import com.r00t.v_lib.activities.main.MainAct;
 import com.r00t.v_lib.activities.myLibrary.myLibraryAct;
+import com.r00t.v_lib.activities.notifications.notificationPageAct;
 import com.r00t.v_lib.activities.start.StartAct;
 import com.r00t.v_lib.data.FirebaseImpl;
 
@@ -16,11 +19,13 @@ import androidx.core.view.GravityCompat;
 
 public class profilePageAct extends profilePageActivity {
     @Override
-    protected void addBookViewClicked() {
-
-        startActivity(new Intent(this, addBookAct.class));
-
-    }
+    protected void homeViewClicked(){startActivity(new Intent(this, MainAct.class));}
+    @Override
+    protected void explorePageViewClicked(){startActivity(new Intent(this, explorePageAct.class));}
+    @Override
+    protected void addBookViewClicked() { startActivity(new Intent(this, addBookAct.class)); }
+    @Override
+    protected void notificationPageViewClicked() { startActivity(new Intent(this, notificationPageAct.class)); }
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {

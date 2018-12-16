@@ -45,11 +45,6 @@ public class SignUpAct extends SignUpActivity {
                                 String uid = task.getResult().getUser().getUid();
                                 String eMail = ((EditText)findViewById(R.id.userNameET)).getText().toString();
                                 String nameAndSurname =((EditText)findViewById(R.id.nameSurnameET)).getText().toString();
-                                Toast.makeText(
-                                        SignUpAct.this,
-                                        nameAndSurname,
-                                        Toast.LENGTH_LONG
-                                ).show();
                                 createDatabaseInstance(uid,nameAndSurname,eMail,"","","","",0);
                             } else {
                                 Toast.makeText(
@@ -69,7 +64,7 @@ public class SignUpAct extends SignUpActivity {
                                         String followers, String followed, String posts, int postCount) {
         UserDetails temp = new UserDetails();
         temp.setId(uid);
-        temp.setUserName(nameAndSurname);
+        temp.setNameAndSurname(nameAndSurname);
         temp.seteMail(eMail);
         temp.setBooks(books);
         temp.setFollowers(followers);

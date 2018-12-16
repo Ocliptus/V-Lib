@@ -1,31 +1,29 @@
-package com.r00t.v_lib.activities.main;
+package com.r00t.v_lib.activities.notifications;
+
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.r00t.v_lib.R;
 import com.r00t.v_lib.activities.addBook.addBookAct;
 import com.r00t.v_lib.activities.explore.explorePageAct;
-import com.r00t.v_lib.activities.myLibrary.myLibraryAct;
+import com.r00t.v_lib.activities.main.MainAct;
 import com.r00t.v_lib.activities.notifications.notificationPageAct;
+import com.r00t.v_lib.activities.myLibrary.myLibraryAct;
 import com.r00t.v_lib.activities.profilePage.profilePageAct;
 import com.r00t.v_lib.activities.start.StartAct;
 import com.r00t.v_lib.data.FirebaseImpl;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import butterknife.ButterKnife;
 
-public class MainAct extends MainActivity {
-
-
-    @Override
-    protected void addBookViewClicked() {
-        startActivity(new Intent(this, addBookAct.class));
-    }
+public class notificationPageAct extends notificationsPageActivity {
 
     @Override
     public void onBackPressed() {
@@ -56,15 +54,19 @@ public class MainAct extends MainActivity {
         return true;
 
     }
+    @Override
+    protected void homeViewClicked(){startActivity(new Intent(this, MainAct.class));}
+    @Override
+    protected void addBookViewClicked() { startActivity(new Intent(this, addBookAct.class)); }
+    @Override
+    protected void exploreViewClicked() { startActivity(new Intent(this, explorePageAct.class)); }
+    @Override
+    protected void profilePageViewClicked() { startActivity(new Intent(this, profilePageAct.class)); }
 
-    @Override
-    protected void profilePageClicked() {
-        startActivity(new Intent(this, profilePageAct.class));
-    }
-    @Override
-    protected void explorePageClicked(){ startActivity(new Intent(this, explorePageAct.class)); }
-    @Override
-    protected void notificationsClicked(){startActivity(new Intent(this, notificationPageAct.class));}
+
 
 
 }
+
+
+
