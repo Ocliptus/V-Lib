@@ -12,8 +12,18 @@ public class UserDetails implements Serializable {
     private String posts;
     private int postCount;
 
+    public int getBookCount() {
+        return bookCount;
+    }
+
+    public void setBookCount(int bookCount) {
+        this.bookCount = bookCount;
+    }
+
+    private int bookCount;
+
     public UserDetails(String id, String nameAndSurname, String eMail, String books,
-                       String followers, String followed, String posts, int postCount) {
+                       String followers, String followed, String posts, int postCount,int bookCount) {
 
         this.id = id;
         this.nameAndSurname = nameAndSurname;

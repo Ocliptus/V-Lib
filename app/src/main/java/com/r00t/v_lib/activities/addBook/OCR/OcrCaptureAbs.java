@@ -38,6 +38,7 @@ import com.r00t.v_lib.activities.addBook.OCR.ui.camera.CameraSourcePreview;
 import com.r00t.v_lib.activities.addBook.OCR.ui.camera.GraphicOverlay;
 import com.r00t.v_lib.data.Book;
 import com.r00t.v_lib.data.FirebaseImpl;
+import com.r00t.v_lib.models.UserDetails;
 
 import java.io.IOException;
 import java.util.Hashtable;
@@ -302,15 +303,49 @@ public abstract class OcrCaptureAbs extends AppCompatActivity {
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    FirebaseImpl.getInstance(getApplicationContext())
+                    String isbn = bookToAdd.getIsbn();
+                    FirebaseImpl
+                            .getInstance(getApplicationContext())
                             .getFirestore()
                             .collection("bookDetails")
-                            .document(bookToAdd.getIsbn())
-                            .set(bookToAdd);
-                    Toast.makeText(graphicOverlay.getContext(), "New book ha ? Hmmm yummy !", Toast.LENGTH_SHORT).show();
-                    myDialog.dismiss();
+                            .document(isbn).set(bookToAdd);
+                    String uid = FirebaseImpl
+                            .getInstance(getApplicationContext())
+                            .getFirebaseUser()
+                            .getUid();
+                    FirebaseImpl
+                            .getInstance(getApplicationContext())
+                            .getFirestore()
+                            .collection("users")
+                            .document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task2) {
+                            UserDetails user = task2.getResult().toObject(UserDetails.class);
+                            String books = user.getBooks();
+                            if(!books.contains(isbn)){
+                                int bookCount = user.getBookCount();
+                                bookCount++;
+                                user.setBookCount(bookCount);
+                                books = books + ","+isbn;
+                                user.setBooks(books);
+                                FirebaseImpl
+                                        .getInstance(getApplicationContext())
+                                        .getFirestore()
+                                        .collection("users")
+                                        .document(uid).set(user);
+                                myDialog.dismiss();
+                                Toast.makeText(graphicOverlay.getContext(), "New book ha ? Hmmm yummy !", Toast.LENGTH_LONG).show();
+                            }else{
+                                Toast.
+                                        makeText(graphicOverlay.getContext(), "You already have this book in your library ! YOU CAN'T FOOL ME !", Toast.LENGTH_LONG)
+                                        .show();
+                                myDialog.dismiss();;
+                            }
 
+
+
+                        }
+                    });
                 }
             });
             btnPass.setOnClickListener(new View.OnClickListener() {

@@ -46,7 +46,7 @@ public class SignUpAct extends SignUpActivity {
                                 String uid = task.getResult().getUser().getUid();
                                 String eMail = ((EditText)findViewById(R.id.userNameET)).getText().toString();
                                 String nameAndSurname =((EditText)findViewById(R.id.nameSurnameET)).getText().toString();
-                                createDatabaseInstance(uid,nameAndSurname,eMail,"","","","",0);
+                                createDatabaseInstance(uid,nameAndSurname,eMail,"","","","",0,0);
                             } else {
                                 Toast.makeText(
                                         SignUpAct.this,
@@ -62,7 +62,7 @@ public class SignUpAct extends SignUpActivity {
         }
     }
     private void createDatabaseInstance(String uid,String nameAndSurname,String eMail, String books,
-                                        String followers, String followed, String posts, int postCount) {
+                                        String followers, String followed, String posts, int postCount,int bookCount) {
         UserDetails temp = new UserDetails();
         temp.setId(uid);
         temp.setNameAndSurname(nameAndSurname);
@@ -72,6 +72,7 @@ public class SignUpAct extends SignUpActivity {
         temp.setFollowed(followed);
         temp.setPosts(posts);
         temp.setPostCount(postCount);
+        temp.setBookCount(bookCount);
 
         FirebaseImpl.getInstance(this)
                 .getFirestore()

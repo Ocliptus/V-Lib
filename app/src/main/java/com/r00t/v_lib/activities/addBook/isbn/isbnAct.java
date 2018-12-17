@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,15 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.auth.User;
 import com.r00t.v_lib.R;
 import com.r00t.v_lib.data.Book;
 import com.r00t.v_lib.data.FirebaseImpl;
+import com.r00t.v_lib.models.UserDetails;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,6 +39,7 @@ import butterknife.ButterKnife;
 
 public class isbnAct extends isbnActivity {
     protected Dialog myDialog;
+    private static final String TAG = "+=+";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,8 @@ public class isbnAct extends isbnActivity {
                     .collection("bookDetails")
                     .document(isbn)
                     .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
@@ -93,6 +95,7 @@ public class isbnAct extends isbnActivity {
                             btnPass = (Button) myDialog.findViewById(R.id.wrong_book);
                             titleTV.setText(book.getTitle());
                             isbnTV.setText(book.getIsbn());
+                            cover_medium_view.setImageBitmap(getBitmapFromURL(book.getCover_medium()));
                             bookUrlTV.setText(book.getUrlBook());
                             numberOfPagesTV.setText(book.getNumber_of_pages());
                             authorsTV.setText(book.getAuthors());
@@ -104,6 +107,7 @@ public class isbnAct extends isbnActivity {
                             isAddLibraryClicked(isbn, book, btnAdd);
                             isClosePopUpClicked(imgClose);
                             isWrongBookClicked(btnPass);
+
                         }else{
                             try {
                                 //get URL content
@@ -228,9 +232,49 @@ public class isbnAct extends isbnActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseImpl.getInstance(getApplicationContext()).getFirestore().collection("bookDetails").document(isbn).set(book);
-                //TODO: add user's library too !!!
-                Toast.makeText(getApplicationContext(), "New book ha ? Hmmm yummy !", Toast.LENGTH_LONG).show();
+                FirebaseImpl
+                        .getInstance(getApplicationContext())
+                        .getFirestore()
+                        .collection("bookDetails")
+                        .document(isbn).set(book);
+                String uid = FirebaseImpl
+                        .getInstance(getApplicationContext())
+                        .getFirebaseUser()
+                        .getUid();
+                FirebaseImpl
+                        .getInstance(getApplicationContext())
+                        .getFirestore()
+                        .collection("users")
+                        .document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task2) {
+                        UserDetails user = task2.getResult().toObject(UserDetails.class);
+                        String books = user.getBooks();
+                        if(!books.contains(isbn)){
+                            int bookCount = user.getBookCount();
+                            bookCount++;
+                            user.setBookCount(bookCount);
+                            books = books + ","+isbn;
+                            user.setBooks(books);
+                            FirebaseImpl
+                                    .getInstance(getApplicationContext())
+                                    .getFirestore()
+                                    .collection("users")
+                                    .document(uid).set(user);
+                            myDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "New book ha ? Hmmm yummy !", Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.
+                                    makeText(getApplicationContext(), "You already have this book in your library ! YOU CAN'T FOOL ME !", Toast.LENGTH_LONG)
+                                    .show();
+                            myDialog.dismiss();;
+                        }
+
+
+
+                    }
+                });
+
             }
         });
 

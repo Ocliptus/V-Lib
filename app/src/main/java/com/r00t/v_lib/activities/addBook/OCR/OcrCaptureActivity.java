@@ -2,7 +2,6 @@ package com.r00t.v_lib.activities.addBook.OCR;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,11 +10,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
-import android.media.Image;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -24,44 +22,34 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.vision.text.Element;
-import com.google.android.gms.vision.text.Line;
-import com.google.android.gms.vision.text.Text;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.r00t.v_lib.activities.addBook.OCR.ui.camera.*;
-
-import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.api.SystemParameterOrBuilder;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.r00t.v_lib.R;
-import com.r00t.v_lib.activities.addBook.OCR.ui.camera.CameraSourcePreview;
-
 import com.r00t.v_lib.activities.addBook.OCR.ui.camera.CameraSource;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import butterknife.OnClick;
-
+import com.r00t.v_lib.activities.addBook.OCR.ui.camera.CameraSourcePreview;
+import com.r00t.v_lib.activities.addBook.OCR.ui.camera.GraphicOverlay;
 import com.r00t.v_lib.data.Book;
 import com.r00t.v_lib.data.FirebaseImpl;
 
-import static com.r00t.v_lib.activities.addBook.isbn.isbnAct.getBitmapFromURL;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+
+
 
 /**
  * Activity for the Ocr Detecting app.  This app detects text and displays the value with the
@@ -343,7 +331,7 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
 
                 bookToAdd = task.getResult().toObject(Book.class);
 
-
+                ImageView cover_medium_view2 = findViewById(R.id.cover_medium_view2);
                 Log.i(TAG, "isBookNull: " + ((Boolean)(bookToAdd == null)).toString());
                 if(task.isSuccessful()){
                     Log.i(TAG, "Task is succesfull");
@@ -357,6 +345,9 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
                         myDialog.getTvPublishDate().setText(bookToAdd.getPublishDate());
                         myDialog.getTvNumberOfPages().setText(bookToAdd.getNumber_of_pages());
                         Log.i(TAG, "onComplete: "+bookToAdd.getCover_medium());
+                        //satır1
+                       // String urlCoverMedium = bookToAdd.getCover_medium();
+                       // cover_medium_view2.setImageBitmap(getBitmapFromURL2(urlCoverMedium));
                         myDialog.show();
                         isExist = true;
                     } else {
@@ -379,7 +370,7 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
 
     }
     @Override
-    protected String correctISBN(String isbn) {
+    public String correctISBN(String isbn) {
         if(isbn.contains("-")){
             String[] isbnArray = isbn.split("[-]");
             isbn="";
@@ -397,6 +388,25 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
             }
         }
         return isbn;
+    }
+
+    public Bitmap getBitmapFromURL2(String src) {
+        try {
+
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            System.out.println("connect error: "+connection.getErrorStream().toString());
+            connection.setDoInput(true);
+            connection.connect();
+            System.out.println("connection error: "+connection.getErrorStream().toString());
+            InputStream input = connection.getInputStream();
+            System.out.println("input out:"+input.toString());
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     @Override
     protected void switchStructure(MethodCase methodCase) {
@@ -425,8 +435,10 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
                     Log.i(TAG, "switchStructure: Title if start");
                     bookToAdd.setTitle(etDetails.getText().toString());
                     myDialog.getTvTitle().setText(etDetails.getText().toString());
+                    Log.i(TAG, "Hello");
                     currentDetail = BookDetailEnum.AUTOHORS;
                     etDetails.setText("");
+                    myDialog.show();
                     Log.i(TAG, "switchStructure: Title if end");
                 } else if (methodCase == MethodCase.btnPrevClicked) {
                     etDetails.setText(bookToAdd.getIsbn());
@@ -479,5 +491,7 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
                 break;
         }
     }
+
+
 
 }

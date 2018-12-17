@@ -26,7 +26,6 @@ import java.util.List;
 public abstract class myLibraryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.sectorsRV)
     protected RecyclerView sectorsRV;
-
     protected DrawerLayout drawer;
     protected BookAdapter bookAdapter;
     protected List<Book> bookList;
@@ -50,7 +49,6 @@ public abstract class myLibraryActivity extends AppCompatActivity implements Nav
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
         initViews();
-
         updateDataSet();
     }
 
