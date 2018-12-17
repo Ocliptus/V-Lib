@@ -21,17 +21,7 @@ public abstract class explorePageActivity extends AppCompatActivity implements N
         ButterKnife.bind(this);
     }
 
-
-
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.END);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
+    public abstract void onBackPressed();
     @OnClick(R.id.nav_addBook)
     protected abstract void addBookViewClicked();
     @OnClick(R.id.nav_home)

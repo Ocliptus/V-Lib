@@ -35,6 +35,7 @@ public abstract class profilePageActivity extends AppCompatActivity implements N
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
         TextView nameAndSurnameTV = findViewById(R.id.nameAndSurnameTV);
         TextView postCountTV = findViewById(R.id.postCount);

@@ -8,6 +8,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.r00t.v_lib.R;
+import com.r00t.v_lib.activities.addBook.addBookAct;
+import com.r00t.v_lib.activities.explore.explorePageAct;
+import com.r00t.v_lib.activities.main.MainAct;
+import com.r00t.v_lib.activities.notifications.notificationPageAct;
+import com.r00t.v_lib.activities.profilePage.profilePageAct;
 import com.r00t.v_lib.activities.start.StartAct;
 import com.r00t.v_lib.data.Book;
 import com.r00t.v_lib.data.FirebaseImpl;
@@ -122,10 +127,29 @@ public class myLibraryAct extends myLibraryActivity {
 
     }
 
-
-    public void mylibclicked() {
+    @Override
+    public void myLibClicked() {
         startActivity(new Intent(this, myLibraryAct.class));
     }
+    @Override
+    public void homeViewClicked() {
+        startActivity(new Intent(this, MainAct.class));
+    }
+    @Override
+    public void exploreViewClicked() {
+        startActivity(new Intent(this, explorePageAct.class));
+    }
+    @Override
+    public void addBookViewClicked() {
+        startActivity(new Intent(this, addBookAct.class));
+    }
+    @Override
+    public void notificationViewClicked() { startActivity(new Intent(this, notificationPageAct.class)); }
+    @Override
+    public void profileViewClicked() {
+        startActivity(new Intent(this, profilePageAct.class));
+    }
+
 
     public String correctISBN(String isbn) {
         if(isbn.contains("-")){

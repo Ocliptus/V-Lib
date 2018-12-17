@@ -27,11 +27,16 @@ public class explorePageAct extends explorePageActivity {
     protected DrawerLayout drawer;
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.END);
-        } else {
-            super.onBackPressed();
+        try {
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.END);
+            } else {
+                onBackPressed();
+            }
+        }catch (NullPointerException e){
+            onBackPressed();
         }
+
     }
 
     @Override

@@ -27,12 +27,6 @@
                 android:text="Add by Using ISBN"></Button>
 
             <Button
-                android:id="@+id/imgButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add by Using Image"></Button>
-
-            <Button
                 android:id="@+id/manuelButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

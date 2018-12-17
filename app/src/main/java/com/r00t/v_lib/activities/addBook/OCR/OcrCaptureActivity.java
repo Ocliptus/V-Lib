@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -37,18 +38,27 @@ import com.r00t.v_lib.R;
 import com.r00t.v_lib.activities.addBook.OCR.ui.camera.CameraSource;
 import com.r00t.v_lib.activities.addBook.OCR.ui.camera.CameraSourcePreview;
 import com.r00t.v_lib.activities.addBook.OCR.ui.camera.GraphicOverlay;
+import com.r00t.v_lib.activities.addBook.isbn.isbnAct;
+import com.r00t.v_lib.activities.addBook.isbn.isbnSearch;
 import com.r00t.v_lib.data.Book;
 import com.r00t.v_lib.data.FirebaseImpl;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-
 
 
 /**
@@ -319,7 +329,7 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
 
     public boolean checkBook(String isbn) {
         Log.i(TAG, "checkBook in");
-        Log.i(TAG, "isbn:"+isbn);
+        Log.i(TAG, "isbn:" + isbn);
         FirebaseImpl.getInstance(this)
                 .getFirestore()
                 .collection("bookDetails")
@@ -332,36 +342,44 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
                 bookToAdd = task.getResult().toObject(Book.class);
 
                 ImageView cover_medium_view2 = findViewById(R.id.cover_medium_view2);
-                Log.i(TAG, "isBookNull: " + ((Boolean)(bookToAdd == null)).toString());
-                if(task.isSuccessful()){
+                Log.i(TAG, "isBookNull: " + ((Boolean) (bookToAdd == null)).toString());
+                if (task.isSuccessful()) {
                     Log.i(TAG, "Task is succesfull");
-                if (bookToAdd != null) {
-                    Log.i(TAG, "Book != bull");
-                    if (bookToAdd.getIsbn().equals(isbn)) {
-                        Log.i(TAG, "bookToAdd.getIsbn().equals(isbn)");
-                        myDialog.getTvIsbn().setText(bookToAdd.getIsbn());
-                        myDialog.getTvTitle().setText(bookToAdd.getTitle());
-                        myDialog.getTvAuthors().setText(bookToAdd.getAuthors());
-                        myDialog.getTvPublishDate().setText(bookToAdd.getPublishDate());
-                        myDialog.getTvNumberOfPages().setText(bookToAdd.getNumber_of_pages());
-                        Log.i(TAG, "onComplete: "+bookToAdd.getCover_medium());
-                        //satır1
-                       // String urlCoverMedium = bookToAdd.getCover_medium();
-                       // cover_medium_view2.setImageBitmap(getBitmapFromURL2(urlCoverMedium));
-                        myDialog.show();
-                        isExist = true;
+                    if (bookToAdd != null) {
+                        Log.i(TAG, "Book != bull");
+                        if (bookToAdd.getIsbn().equals(isbn)) {
+                            Log.i(TAG, "bookToAdd.getIsbn().equals(isbn)");
+                            myDialog.getTvIsbn().setText(bookToAdd.getIsbn());
+                            myDialog.getTvTitle().setText(bookToAdd.getTitle());
+                            myDialog.getTvAuthors().setText(bookToAdd.getAuthors());
+                            myDialog.getTvPublishDate().setText(bookToAdd.getPublishDate());
+                            myDialog.getTvNumberOfPages().setText(bookToAdd.getNumber_of_pages());
+                            Log.i(TAG, "onComplete: " + bookToAdd.getCover_medium());
+                            //satır1
+                            // String urlCoverMedium = bookToAdd.getCover_medium();
+                            // cover_medium_view2.setImageBitmap(getBitmapFromURL2(urlCoverMedium));
+                            myDialog.show();
+                            isExist = true;
+                        } else {
+
+                            checkOpenLib(isbn);
+                            if(bookToAdd==null)
+                                isExist = false;
+                                        else
+                                            isExist = true;
+
+                            Log.i(TAG, "inner else");
+
+                        }
+
                     } else {
+
                         isExist = false;
-                        Log.i(TAG, "inner else");
+
+                        Log.i(TAG, "outer else");
 
                     }
-
-                } else {
-                    isExist = false;
-                    Log.i(TAG, "outer else");
-
-                }
-                }else
+                } else
                     Log.i(TAG, "Task is failed");
 
             }
@@ -369,24 +387,15 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
         return isExist;
 
     }
+
     @Override
     public String correctISBN(String isbn) {
-        if(isbn.contains("-")){
-            String[] isbnArray = isbn.split("[-]");
-            isbn="";
-            for(int i = 0; i<isbnArray.length; i++)
-            {
-                isbn+=isbnArray[i];
+
+            String[] isbnArray = isbn.split("[\\D]");
+            isbn = "";
+            for (int i = 0; i < isbnArray.length; i++) {
+                isbn += isbnArray[i];
             }
-        }
-        if (isbn.contains(" ")){
-            String[] isbnArray = isbn.split("[ ]");
-            isbn="";
-            for(int i = 0; i<isbnArray.length; i++)
-            {
-                isbn+=isbnArray[i];
-            }
-        }
         return isbn;
     }
 
@@ -395,12 +404,12 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
 
             URL url = new URL(src);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            System.out.println("connect error: "+connection.getErrorStream().toString());
+            System.out.println("connect error: " + connection.getErrorStream().toString());
             connection.setDoInput(true);
             connection.connect();
-            System.out.println("connection error: "+connection.getErrorStream().toString());
+            System.out.println("connection error: " + connection.getErrorStream().toString());
             InputStream input = connection.getInputStream();
-            System.out.println("input out:"+input.toString());
+            System.out.println("input out:" + input.toString());
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
             return myBitmap;
         } catch (IOException e) {
@@ -408,6 +417,7 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
             return null;
         }
     }
+
     @Override
     protected void switchStructure(MethodCase methodCase) {
         switch (currentDetail) {
@@ -491,6 +501,77 @@ public final class OcrCaptureActivity extends OcrCaptureAbs {
                 break;
         }
     }
+
+    public void checkOpenLib(String isbn) {
+        try {
+            //get URL content
+            URL url;
+            url = new URL(isbnSearch.urlCombine(isbn));
+            URLConnection con = url.openConnection();
+            // open the stream and put it into BufferedReader
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine = "";
+            inputLine = br.readLine();
+            JSONObject obj = new JSONObject(inputLine);
+            String objName = "ISBN:" + isbn;
+            String weight = obj.getJSONObject(objName).optString("weight");
+            String urlBook = obj.getJSONObject(objName).optString("url");
+            String number_of_pages = obj.optJSONObject(objName).optString("number_of_pages");
+            String publishDate = obj.optJSONObject(objName).optString("publish_date");
+            String title = obj.optJSONObject(objName).optString("title");
+            try {
+                JSONObject cover = obj.optJSONObject(objName).optJSONObject("cover");
+                String cover_small = cover.optString("small");
+                String cover_medium = cover.optString("medium");
+                String cover_large = cover.optString("large");
+                JSONArray authors = obj.optJSONObject(objName).optJSONArray("authors");
+                String author = "";
+                JSONArray publishPlaces = obj.optJSONObject(objName).optJSONArray("publish_places");
+                String publish_places = "";
+                int i;
+                for (i = 0; i < authors.length(); i++) {
+                    String tempInput = authors.get(i).toString();
+                    JSONObject tempObj = new JSONObject(tempInput);
+                    author = author + " / " + tempObj.optString("name");
+                    String tempInput2 = publishPlaces.get(i).toString();
+                    JSONObject tempObj2 = new JSONObject(tempInput2);
+                    publish_places = publish_places + " / " + tempObj2.optString("name");
+                }
+                bookToAdd = new Book(isbn, weight, urlBook, number_of_pages, publishDate,
+                        title, cover_small, cover_medium, cover_large, author, publish_places);
+                Toast.makeText(getApplicationContext(), "This book comes from OpenLibrary API", Toast.LENGTH_LONG).show();
+
+                myDialog.getTvTitle().setText(title);
+                myDialog.getTvIsbn().setText(isbn);
+                myDialog.getTvNumberOfPages().setText(number_of_pages);
+                myDialog.getTvAuthors().setText(author);
+                myDialog.getTvPublishDate().setText(publishDate);
+                myDialog.dismiss();
+                myDialog.show();
+                myDialog.getBtnAdd();
+                myDialog.getBtnPass();
+
+            } catch (NullPointerException e2) {
+                String cover_small = "";
+                String cover_medium = "";
+                String cover_large = "";
+            }
+        } catch (MalformedURLException e1) {
+            e1.printStackTrace();
+            Toast.makeText(getApplicationContext(), "1 rd exception", Toast.LENGTH_LONG).show();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+            Toast.makeText(getApplicationContext(), "2 rd exception", Toast.LENGTH_LONG).show();
+
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+            Toast.makeText(getApplicationContext(), "This isbn is not exist in our database !", Toast.LENGTH_LONG).show();
+        } catch (NullPointerException e1) {
+            Toast.makeText(getApplicationContext(), "This isbn is not exist in our database !", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
 
 
 

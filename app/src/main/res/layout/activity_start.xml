@@ -7,11 +7,28 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".activities.start.StartActivity">
-
+    tools:context=".activities.start.StartActivity"
+    android:background="#000">
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:id="@+id/vl_logo"
+        android:src="@mipmap/ic_vlib_icon4"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="START ACT"
-        android:textSize="25sp" />
+        android:text="Virtual Library"
+        android:textStyle="italic"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:textColor="#fff"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Store The Future"
+        android:textStyle="italic"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:textColor="#fff"/>
+
 </LinearLayout>

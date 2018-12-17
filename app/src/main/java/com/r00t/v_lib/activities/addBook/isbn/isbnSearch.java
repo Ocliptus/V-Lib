@@ -17,7 +17,7 @@ public class isbnSearch {
     private static final String API_BASE_URL_END = "&jscmd=data&format=json";
     private static String API_URL_ISBN = "";
 
-    protected static String urlCombine(String isbn) { return API_URL_ISBN = API_BASE_URL + isbn + API_BASE_URL_END; }
+    public static String urlCombine(String isbn) { return API_URL_ISBN = API_BASE_URL + isbn + API_BASE_URL_END; }
     public static String getText(String url) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

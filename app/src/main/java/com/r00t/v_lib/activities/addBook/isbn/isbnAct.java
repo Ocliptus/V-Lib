@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.api.SystemParameterOrBuilder;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.r00t.v_lib.R;
 import com.r00t.v_lib.data.Book;
@@ -40,6 +41,7 @@ import butterknife.ButterKnife;
 public class isbnAct extends isbnActivity {
     protected Dialog myDialog;
     private static final String TAG = "+=+";
+    private boolean isExist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +59,11 @@ public class isbnAct extends isbnActivity {
                 .getText().toString().matches("[\\d]{10}|[\\d]{13}")) {
             final String isbn = ((EditText) findViewById(R.id.isbnET)).getText().toString();
             System.out.println("+=+ " + isbn);
-            FirebaseImpl.getInstance(this)
+            FirebaseImpl.getInstance(getApplicationContext())
                     .getFirestore()
                     .collection("bookDetails")
                     .document(isbn)
                     .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-
-
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
@@ -107,7 +107,7 @@ public class isbnAct extends isbnActivity {
                             isAddLibraryClicked(isbn, book, btnAdd);
                             isClosePopUpClicked(imgClose);
                             isWrongBookClicked(btnPass);
-
+                            System.out.println("Doesnot goes to else");
                         }else{
                             try {
                                 //get URL content
@@ -269,9 +269,6 @@ public class isbnAct extends isbnActivity {
                                     .show();
                             myDialog.dismiss();;
                         }
-
-
-
                     }
                 });
 
